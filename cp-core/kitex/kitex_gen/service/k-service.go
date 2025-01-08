@@ -10,8 +10,8 @@ import (
 
 	"github.com/cloudwego/gopkg/protocol/thrift"
 
-	"github.com/lianzhilu/chat-paper/cp-api-server/kitex/kitex_gen/base"
-	"github.com/lianzhilu/chat-paper/cp-api-server/kitex/kitex_gen/user"
+	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
+	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user"
 )
 
 var (
