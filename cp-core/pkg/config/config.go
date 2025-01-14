@@ -21,8 +21,20 @@ type MySQLConfig struct {
 	MySQLPort     string `mapstructure:"CP_MYSQL_PORT"`
 }
 
+type GatewayConfig struct {
+	GateWayHost string `mapstructure:"CP_GATEWAY_HOST"`
+	GateWayPort string `mapstructure:"CP_GATEWAY_PORT"`
+}
+
+type UserServiceConfig struct {
+	UserServiceHost string `mapstructure:"CP_USER_SERVICE_HOST"`
+	UserServicePort string `mapstructure:"CP_USER_SERVICE_PORT"`
+}
+
 type CPRuntimeConfig struct {
-	MySQLConfig MySQLConfig `mapstructure:"CP_MYSQL_CONFIG"`
+	MySQLConfig       MySQLConfig       `mapstructure:"CP_MYSQL_CONFIG"`
+	GatewayConfig     GatewayConfig     `mapstructure:"CP_GATEWAY_CONFIG"`
+	UserServiceConfig UserServiceConfig `mapstructure:"CP_USER_SERVICE_CONFIG"`
 }
 
 func getEnv(key, defaultValue string) string {
