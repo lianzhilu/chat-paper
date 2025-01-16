@@ -1,13 +1,14 @@
 namespace go user
 
 struct RegisterRequest {
-    1: required string ID
+    1: required string Name
     2: required string Password
-    3: required string Name
+
 }
 
 struct RegisterResponse {
     1: required string ID
+    2: required string Name
 }
 
 

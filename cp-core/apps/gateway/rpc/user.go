@@ -2,14 +2,20 @@ package rpc
 
 import (
 	"context"
+	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user/userservice"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/config"
 	"time"
 )
 
-var userClient userservice.Client
+var (
+	userClient    userservice.Client
+	serviceConfig = config.GetRuntimeConfig()
+	serviceAddr   = fmt.Sprintf("%s:%s", serviceConfig.UserServiceConfig.UserServiceHost, serviceConfig.UserServiceConfig.UserServicePort)
+)
 
 func InitUserClient() {
 	c, err := userservice.NewClient(
@@ -18,7 +24,7 @@ func InitUserClient() {
 		client.WithRPCTimeout(30*time.Second), // rpc timeout
 		client.WithConnectTimeout(30000*time.Millisecond), // conn timeout
 		client.WithFailureRetry(retry.NewFailurePolicy()),
-		client.WithHostPorts("localhost:8888"),
+		client.WithHostPorts(serviceAddr),
 	)
 	if err != nil {
 		panic(err)
