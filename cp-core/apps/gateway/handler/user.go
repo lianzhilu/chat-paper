@@ -6,6 +6,8 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/lianzhilu/chat-paper/cp-core/apps/gateway/rpc"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/errmsg"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/response"
 	"net/http"
 	"strings"
 )
@@ -24,6 +26,13 @@ func validateName(name string) error {
 	return nil
 }
 
+func validatePassword(password string) error {
+	if len(password) < 8 || len(password) > 32 {
+		return errors.New("invalid password length")
+	}
+	return nil
+}
+
 func validateForRegister(name, password string) error {
 	var err error
 	err = validateName(name)
@@ -37,26 +46,19 @@ func validateForRegister(name, password string) error {
 	return nil
 }
 
-func validatePassword(password string) error {
-	if len(password) < 8 || len(password) > 32 {
-		return errors.New("invalid password length")
-	}
-	return nil
-}
-
 func Register(ctx context.Context, c *app.RequestContext) {
 	var body user.RegisterRequest
 	if err := c.Bind(&body); err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
 		return
 	}
 
 	if err := validateName(body.Name); err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
 		return
 	}
 	if err := validatePassword(body.Password); err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
 		return
 	}
 
@@ -66,8 +68,8 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	}
 	resp, err := rpc.Register(ctx, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err.Error())
+		c.JSON(http.StatusInternalServerError, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
 		return
 	}
-	c.JSON(http.StatusOK, resp)
+	c.JSON(http.StatusOK, response.ConstructSuccessResponse(resp))
 }
