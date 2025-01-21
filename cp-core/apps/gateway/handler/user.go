@@ -73,3 +73,22 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	}
 	c.JSON(http.StatusOK, response.ConstructSuccessResponse(resp))
 }
+
+func Login(ctx context.Context, c *app.RequestContext) {
+	var body user.LoginRequest
+	if err := c.Bind(&body); err != nil {
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		return
+	}
+
+	req := &user.LoginRequest{
+		ID:       body.ID,
+		Password: body.Password,
+	}
+	resp, err := rpc.Login(ctx, req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, response.ConstructSuccessResponse(resp))
+}

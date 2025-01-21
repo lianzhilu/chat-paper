@@ -35,3 +35,7 @@ func InitUserClient() {
 func Register(ctx context.Context, req *user.RegisterRequest) (r *user.RegisterResponse, err error) {
 	return userClient.Register(ctx, req)
 }
+
+func Login(ctx context.Context, req *user.LoginRequest) (r *user.LoginResponse, err error) {
+	return userClient.Login(ctx, req)
+}

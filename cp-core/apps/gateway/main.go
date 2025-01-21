@@ -18,6 +18,7 @@ func registerGroup(hz *server.Hertz) {
 		user := chatpaper.Group("/user")
 		{
 			user.POST("/register/", handler.Register)
+			user.POST("/login/", handler.Login)
 		}
 	}
 }

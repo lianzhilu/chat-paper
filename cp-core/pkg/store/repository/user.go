@@ -15,6 +15,7 @@ type CreateUserParams struct {
 type UserRepository interface {
 	CreateUser(ctx context.Context, param *CreateUserParams) error
 	GetUserByName(ctx context.Context, name string) (*model.User, error)
+	GetUserByID(ctx context.Context, id string) (*model.User, error)
 }
 
 type MySQLUserRepository struct {
@@ -42,6 +43,15 @@ func (r *MySQLUserRepository) GetUserByName(ctx context.Context, name string) (*
 	db := r.DB.WithContext(ctx)
 	var user model.User
 	if err := db.Where("name = ?", name).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+func (r *MySQLUserRepository) GetUserByID(ctx context.Context, id string) (*model.User, error) {
+	db := r.DB.WithContext(ctx)
+	var user model.User
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
