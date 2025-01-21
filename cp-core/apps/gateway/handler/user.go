@@ -53,6 +53,9 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	if err := validateName(body.Name); err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 	}
+	if err := validatePassword(body.Password); err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
 
 	req := &user.RegisterRequest{
 		Name:     body.Name,

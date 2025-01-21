@@ -6,6 +6,8 @@ import (
 	"github.com/lianzhilu/chat-paper/cp-core/apps/user/service"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user/userservice"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/config"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/database"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/repository"
 	"net"
 )
 
@@ -19,8 +21,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	userRepo := repository.NewUserRepository(database.GetDB())
+	userService := service.NewUserServiceImpl(userRepo)
 	svc := userservice.NewServer(
-		new(service.UserServiceImpl),
+		userService,
 		server.WithServiceAddr(addr),
 	)
 	if err := svc.Run(); err != nil {
