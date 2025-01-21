@@ -48,13 +48,16 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	var body user.RegisterRequest
 	if err := c.Bind(&body); err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	if err := validateName(body.Name); err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
 	if err := validatePassword(body.Password); err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
 
 	req := &user.RegisterRequest{
@@ -64,6 +67,7 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	resp, err := rpc.Register(ctx, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 	c.JSON(http.StatusOK, resp)
 }
