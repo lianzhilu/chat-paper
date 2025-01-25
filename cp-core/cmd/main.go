@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/lianzhilu/chat-paper/cp-core/cmd/automigrate"
+	"github.com/lianzhilu/chat-paper/cp-core/cmd/gormgen"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +16,7 @@ func main() {
 		},
 	}
 	cmd.AddCommand(automigrate.NewCommand())
+	cmd.AddCommand(gormgen.NewCommand())
 	if err := cmd.Execute(); err != nil {
 		panic(err)
 	}

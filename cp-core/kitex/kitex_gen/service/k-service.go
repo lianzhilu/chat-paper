@@ -10,11 +10,13 @@ import (
 
 	"github.com/cloudwego/gopkg/protocol/thrift"
 
+	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user"
 )
 
 var (
+	_ = article.KitexUnusedProtection
 	_ = base.KitexUnusedProtection
 	_ = user.KitexUnusedProtection
 )

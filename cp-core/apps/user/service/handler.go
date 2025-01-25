@@ -46,7 +46,7 @@ func (impl *UserServiceImpl) Register(ctx context.Context, req *user.RegisterReq
 }
 
 func (impl *UserServiceImpl) Login(ctx context.Context, req *user.LoginRequest) (resp *user.LoginResponse, err error) {
-	loginUser, err := impl.userRepo.GetUserByName(ctx, req.ID)
+	loginUser, err := impl.userRepo.GetUser(ctx, req.ID)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, fmt.Errorf("user %s not found", req.ID)

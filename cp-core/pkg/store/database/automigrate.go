@@ -7,6 +7,7 @@ import (
 
 var models = []interface{}{
 	model.User{},
+	model.Article{},
 }
 
 func AutoMigrate(db *gorm.DB) error {
