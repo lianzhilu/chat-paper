@@ -5,13 +5,11 @@ const ArticleStatus ArticleStatusPrivate   = "private"
 
 
 struct CreateArticleRequest {
-	1: required string        Author
+	1: required string        AuthorID
 	2: required string        Title
 	3: required string        Content
-	4: optional ArticleStatus Status   (go.tag = "default:published")
+	4: required ArticleStatus Status    (go.tag = "default:published")
 }
-
-
 
 struct CreateArticleResponse {
 	1: required string        ID

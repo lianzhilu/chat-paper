@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/constants"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/dal"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/model"
 	"gorm.io/gen/field"
@@ -141,7 +142,7 @@ func (r *MySQLArticleRepository) ListArticles(ctx context.Context, param *ListAr
 	if !ok {
 		sortByField = articleOrm.CreateTime
 	}
-	if param.SortOrder == "Asc" {
+	if param.SortOrder == constants.SortOrderAsc {
 		query.Order(sortByField)
 	} else {
 		query.Order(sortByField.Desc())

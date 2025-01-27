@@ -20,10 +20,10 @@ const (
 type ArticleStatus = string
 
 type CreateArticleRequest struct {
-	Author  string         `thrift:"Author,1,required" frugal:"1,required,string" json:"Author"`
-	Title   string         `thrift:"Title,2,required" frugal:"2,required,string" json:"Title"`
-	Content string         `thrift:"Content,3,required" frugal:"3,required,string" json:"Content"`
-	Status  *ArticleStatus `thrift:"Status,4,optional" frugal:"4,optional,string" default:published`
+	AuthorID string        `thrift:"AuthorID,1,required" frugal:"1,required,string" json:"AuthorID"`
+	Title    string        `thrift:"Title,2,required" frugal:"2,required,string" json:"Title"`
+	Content  string        `thrift:"Content,3,required" frugal:"3,required,string" json:"Content"`
+	Status   ArticleStatus `thrift:"Status,4,required" frugal:"4,required,string" default:published`
 }
 
 func NewCreateArticleRequest() *CreateArticleRequest {
@@ -33,8 +33,8 @@ func NewCreateArticleRequest() *CreateArticleRequest {
 func (p *CreateArticleRequest) InitDefault() {
 }
 
-func (p *CreateArticleRequest) GetAuthor() (v string) {
-	return p.Author
+func (p *CreateArticleRequest) GetAuthorID() (v string) {
+	return p.AuthorID
 }
 
 func (p *CreateArticleRequest) GetTitle() (v string) {
@@ -45,16 +45,11 @@ func (p *CreateArticleRequest) GetContent() (v string) {
 	return p.Content
 }
 
-var CreateArticleRequest_Status_DEFAULT ArticleStatus
-
 func (p *CreateArticleRequest) GetStatus() (v ArticleStatus) {
-	if !p.IsSetStatus() {
-		return CreateArticleRequest_Status_DEFAULT
-	}
-	return *p.Status
+	return p.Status
 }
-func (p *CreateArticleRequest) SetAuthor(val string) {
-	p.Author = val
+func (p *CreateArticleRequest) SetAuthorID(val string) {
+	p.AuthorID = val
 }
 func (p *CreateArticleRequest) SetTitle(val string) {
 	p.Title = val
@@ -62,28 +57,25 @@ func (p *CreateArticleRequest) SetTitle(val string) {
 func (p *CreateArticleRequest) SetContent(val string) {
 	p.Content = val
 }
-func (p *CreateArticleRequest) SetStatus(val *ArticleStatus) {
+func (p *CreateArticleRequest) SetStatus(val ArticleStatus) {
 	p.Status = val
 }
 
 var fieldIDToName_CreateArticleRequest = map[int16]string{
-	1: "Author",
+	1: "AuthorID",
 	2: "Title",
 	3: "Content",
 	4: "Status",
-}
-
-func (p *CreateArticleRequest) IsSetStatus() bool {
-	return p.Status != nil
 }
 
 func (p *CreateArticleRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetAuthor bool = false
+	var issetAuthorID bool = false
 	var issetTitle bool = false
 	var issetContent bool = false
+	var issetStatus bool = false
 
 	if _, err = iprot.ReadStructBegin(); err != nil {
 		goto ReadStructBeginError
@@ -104,7 +96,7 @@ func (p *CreateArticleRequest) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetAuthor = true
+				issetAuthorID = true
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
@@ -131,6 +123,7 @@ func (p *CreateArticleRequest) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
+				issetStatus = true
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
@@ -147,7 +140,7 @@ func (p *CreateArticleRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetAuthor {
+	if !issetAuthorID {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -159,6 +152,11 @@ func (p *CreateArticleRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	if !issetContent {
 		fieldId = 3
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetStatus {
+		fieldId = 4
 		goto RequiredFieldNotSetError
 	}
 	return nil
@@ -187,7 +185,7 @@ func (p *CreateArticleRequest) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Author = _field
+	p.AuthorID = _field
 	return nil
 }
 func (p *CreateArticleRequest) ReadField2(iprot thrift.TProtocol) error {
@@ -214,11 +212,11 @@ func (p *CreateArticleRequest) ReadField3(iprot thrift.TProtocol) error {
 }
 func (p *CreateArticleRequest) ReadField4(iprot thrift.TProtocol) error {
 
-	var _field *ArticleStatus
+	var _field ArticleStatus
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		_field = &v
+		_field = v
 	}
 	p.Status = _field
 	return nil
@@ -266,10 +264,10 @@ WriteStructEndError:
 }
 
 func (p *CreateArticleRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("Author", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("AuthorID", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Author); err != nil {
+	if err := oprot.WriteString(p.AuthorID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -317,16 +315,14 @@ WriteFieldEndError:
 }
 
 func (p *CreateArticleRequest) writeField4(oprot thrift.TProtocol) (err error) {
-	if p.IsSetStatus() {
-		if err = oprot.WriteFieldBegin("Status", thrift.STRING, 4); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(*p.Status); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("Status", thrift.STRING, 4); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Status); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:
@@ -349,7 +345,7 @@ func (p *CreateArticleRequest) DeepEqual(ano *CreateArticleRequest) bool {
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.Author) {
+	if !p.Field1DeepEqual(ano.AuthorID) {
 		return false
 	}
 	if !p.Field2DeepEqual(ano.Title) {
@@ -366,7 +362,7 @@ func (p *CreateArticleRequest) DeepEqual(ano *CreateArticleRequest) bool {
 
 func (p *CreateArticleRequest) Field1DeepEqual(src string) bool {
 
-	if strings.Compare(p.Author, src) != 0 {
+	if strings.Compare(p.AuthorID, src) != 0 {
 		return false
 	}
 	return true
@@ -385,14 +381,9 @@ func (p *CreateArticleRequest) Field3DeepEqual(src string) bool {
 	}
 	return true
 }
-func (p *CreateArticleRequest) Field4DeepEqual(src *ArticleStatus) bool {
+func (p *CreateArticleRequest) Field4DeepEqual(src ArticleStatus) bool {
 
-	if p.Status == src {
-		return true
-	} else if p.Status == nil || src == nil {
-		return false
-	}
-	if strings.Compare(*p.Status, *src) != 0 {
+	if strings.Compare(p.Status, src) != 0 {
 		return false
 	}
 	return true

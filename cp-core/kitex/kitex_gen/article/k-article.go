@@ -27,9 +27,10 @@ func (p *CreateArticleRequest) FastRead(buf []byte) (int, error) {
 	var l int
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetAuthor bool = false
+	var issetAuthorID bool = false
 	var issetTitle bool = false
 	var issetContent bool = false
+	var issetStatus bool = false
 	for {
 		fieldTypeId, fieldId, l, err = thrift.Binary.ReadFieldBegin(buf[offset:])
 		offset += l
@@ -47,7 +48,7 @@ func (p *CreateArticleRequest) FastRead(buf []byte) (int, error) {
 				if err != nil {
 					goto ReadFieldError
 				}
-				issetAuthor = true
+				issetAuthorID = true
 			} else {
 				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 				offset += l
@@ -92,6 +93,7 @@ func (p *CreateArticleRequest) FastRead(buf []byte) (int, error) {
 				if err != nil {
 					goto ReadFieldError
 				}
+				issetStatus = true
 			} else {
 				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 				offset += l
@@ -108,7 +110,7 @@ func (p *CreateArticleRequest) FastRead(buf []byte) (int, error) {
 		}
 	}
 
-	if !issetAuthor {
+	if !issetAuthorID {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -120,6 +122,11 @@ func (p *CreateArticleRequest) FastRead(buf []byte) (int, error) {
 
 	if !issetContent {
 		fieldId = 3
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetStatus {
+		fieldId = 4
 		goto RequiredFieldNotSetError
 	}
 	return offset, nil
@@ -143,7 +150,7 @@ func (p *CreateArticleRequest) FastReadField1(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Author = _field
+	p.AuthorID = _field
 	return offset, nil
 }
 
@@ -178,12 +185,12 @@ func (p *CreateArticleRequest) FastReadField3(buf []byte) (int, error) {
 func (p *CreateArticleRequest) FastReadField4(buf []byte) (int, error) {
 	offset := 0
 
-	var _field *ArticleStatus
+	var _field ArticleStatus
 	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
-		_field = &v
+		_field = v
 	}
 	p.Status = _field
 	return offset, nil
@@ -220,7 +227,7 @@ func (p *CreateArticleRequest) BLength() int {
 func (p *CreateArticleRequest) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
-	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Author)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.AuthorID)
 	return offset
 }
 
@@ -240,17 +247,15 @@ func (p *CreateArticleRequest) fastWriteField3(buf []byte, w thrift.NocopyWriter
 
 func (p *CreateArticleRequest) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetStatus() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 4)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Status)
-	}
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 4)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Status)
 	return offset
 }
 
 func (p *CreateArticleRequest) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
-	l += thrift.Binary.StringLengthNocopy(p.Author)
+	l += thrift.Binary.StringLengthNocopy(p.AuthorID)
 	return l
 }
 
@@ -270,10 +275,8 @@ func (p *CreateArticleRequest) field3Length() int {
 
 func (p *CreateArticleRequest) field4Length() int {
 	l := 0
-	if p.IsSetStatus() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Status)
-	}
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.StringLengthNocopy(p.Status)
 	return l
 }
 

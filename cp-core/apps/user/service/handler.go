@@ -29,12 +29,12 @@ func (impl *UserServiceImpl) Register(ctx context.Context, req *user.RegisterReq
 	}
 
 	id := generator.GenerateUserID()
-	param := repository.CreateUserParams{
+	param := &repository.CreateUserParams{
 		ID:       id,
 		Name:     req.Name,
 		Password: req.Password,
 	}
-	err = impl.userRepo.CreateUser(ctx, &param)
+	err = impl.userRepo.CreateUser(ctx, param)
 	if err != nil {
 		return nil, err
 	}
