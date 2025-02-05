@@ -12,19 +12,19 @@ import (
 )
 
 var (
-	userClient         userservice.Client
-	articleServiceAddr = fmt.Sprintf("%s:%s", serviceConfig.UserServiceConfig.UserServiceHost, serviceConfig.UserServiceConfig.UserServicePort)
+	userClient      userservice.Client
+	userServiceAddr = fmt.Sprintf("%s:%s", serviceConfig.UserServiceConfig.UserServiceHost, serviceConfig.UserServiceConfig.UserServicePort)
 )
 
 func InitUserClient() {
-	r, err := etcd.NewEtcdResolver([]string{"127.0.0.1:2379"})
+	r, err := etcd.NewEtcdResolver(etcdAddrs)
 	c, err := userservice.NewClient(
 		"user",
 		client.WithMuxConnection(1),           // mux
 		client.WithRPCTimeout(30*time.Second), // rpc timeout
 		client.WithConnectTimeout(30000*time.Millisecond), // conn timeout
 		client.WithFailureRetry(retry.NewFailurePolicy()),
-		client.WithHostPorts(articleServiceAddr),
+		client.WithHostPorts(userServiceAddr),
 		client.WithResolver(r),
 	)
 	if err != nil {

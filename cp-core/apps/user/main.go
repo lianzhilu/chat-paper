@@ -14,13 +14,14 @@ import (
 )
 
 var (
-	serviceConfig = config.GetRuntimeConfig()
-	serviceAddr   = fmt.Sprintf("%s:%s", serviceConfig.UserServiceConfig.UserServiceHost, serviceConfig.UserServiceConfig.UserServicePort)
+	serviceConfig   = config.GetRuntimeConfig()
+	userServiceAddr = fmt.Sprintf("%s:%s", serviceConfig.UserServiceConfig.UserServiceHost, serviceConfig.UserServiceConfig.UserServicePort)
+	etcdAddrs       = []string{fmt.Sprintf("%s:%s", serviceConfig.EtcdConfig.EtcdHost, serviceConfig.EtcdConfig.EtcdPort)}
 )
 
 func main() {
-	addr, err := net.ResolveTCPAddr("tcp", serviceAddr)
-	r, err := etcd.NewEtcdRegistry([]string{"127.0.0.1:2379"})
+	addr, err := net.ResolveTCPAddr("tcp", userServiceAddr)
+	r, err := etcd.NewEtcdRegistry(etcdAddrs)
 	if err != nil {
 		panic(err)
 	}
