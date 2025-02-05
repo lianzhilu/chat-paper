@@ -18,5 +18,5 @@ type Article struct {
 	CommentCount uint64                `gorm:"type:int;not null;default:0;comment:文章评论量"`
 	CreateTime   time.Time             `gorm:"autoCreateTime"`
 	UpdateTime   time.Time             `gorm:"autoUpdateTime"`
-	DeleteTime   soft_delete.DeletedAt `gorm:"uniqueIndex:uniq_user_id"`
+	DeleteTime   soft_delete.DeletedAt `gorm:"uniqueIndex:uniq_article_id"`
 }
