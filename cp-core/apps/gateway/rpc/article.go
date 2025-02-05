@@ -8,6 +8,7 @@ import (
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article/articleservice"
+	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 	"time"
 )
 
@@ -34,4 +35,20 @@ func InitArticleClient() {
 
 func CreateArticle(ctx context.Context, req *article.CreateArticleRequest) (*article.CreateArticleResponse, error) {
 	return articleClient.CreateArticle(ctx, req)
+}
+
+func GetArticle(ctx context.Context, req *article.GetArticleRequest) (*article.Article, error) {
+	return articleClient.GetArticle(ctx, req)
+}
+
+func UpdateArticle(ctx context.Context, req *article.UpdateArticleRequest) (*base.EmptyBody, error) {
+	return articleClient.UpdateArticle(ctx, req)
+}
+
+func ListArticles(ctx context.Context, req *article.ListArticlesRequest) (*article.ListArticlesResponse, error) {
+	return articleClient.ListArticles(ctx, req)
+}
+
+func DeleteArticle(ctx context.Context, req *article.DeleteArticleRequest) (*base.EmptyBody, error) {
+	return articleClient.DeleteArticle(ctx, req)
 }
