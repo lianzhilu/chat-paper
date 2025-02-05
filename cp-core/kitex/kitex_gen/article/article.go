@@ -1967,7 +1967,7 @@ type ListArticlesRequest struct {
 	PageNumber *int32          `thrift:"PageNumber,1,optional" frugal:"1,optional,i32" default:1`
 	PageSize   *int32          `thrift:"PageSize,2,optional" frugal:"2,optional,i32" default:10`
 	SortOrder  *string         `thrift:"SortOrder,3,optional" frugal:"3,optional,string" default:desc`
-	SortBy     *string         `thrift:"SortBy,4,optional" frugal:"4,optional,string" default:create_time`
+	SortBy     *string         `thrift:"SortBy,4,optional" frugal:"4,optional,string" default:CreateTime`
 	Statuses   []ArticleStatus `thrift:"Statuses,5,optional" frugal:"5,optional,list<string>" json:"Statuses,omitempty"`
 	AuthorIDs  []string        `thrift:"AuthorIDs,6,optional" frugal:"6,optional,list<string>" json:"AuthorIDs,omitempty"`
 }
