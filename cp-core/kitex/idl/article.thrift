@@ -45,7 +45,7 @@ struct ListArticlesRequest {
 	1: optional i32                 PageNumber  (go.tag = "default:1")
 	2: optional i32                 PageSize    (go.tag = "default:10")
 	3: optional string              SortOrder   (go.tag = "default:desc")
-	4: optional string              SortBy      (go.tag = "default:create_time")
+	4: optional string              SortBy      (go.tag = "default:CreateTime")
 	5: optional list<ArticleStatus> Statuses
 	6: optional list<string>        AuthorIDs
 }
