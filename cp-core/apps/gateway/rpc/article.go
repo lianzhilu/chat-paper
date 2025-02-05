@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -13,8 +12,7 @@ import (
 )
 
 var (
-	articleClient      articleservice.Client
-	articleServiceAddr = fmt.Sprintf("%s:%s", serviceConfig.ArticleServiceConfig.ArticleServiceHost, serviceConfig.ArticleServiceConfig)
+	articleClient articleservice.Client
 )
 
 func InitArticleClient() {

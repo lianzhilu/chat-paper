@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"context"
-	"fmt"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -12,8 +11,7 @@ import (
 )
 
 var (
-	userClient      userservice.Client
-	userServiceAddr = fmt.Sprintf("%s:%s", serviceConfig.UserServiceConfig.UserServiceHost, serviceConfig.UserServiceConfig.UserServicePort)
+	userClient userservice.Client
 )
 
 func InitUserClient() {
