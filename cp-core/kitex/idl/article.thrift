@@ -42,8 +42,8 @@ struct UpdateArticleRequest {
 }
 
 struct ListArticlesRequest {
-	1: optional i64                 PageNumber  (go.tag = "default:1")
-	2: optional i64                 PageSize    (go.tag = "default:10")
+	1: optional i32                 PageNumber  (go.tag = "default:1")
+	2: optional i32                 PageSize    (go.tag = "default:10")
 	3: optional string              SortOrder   (go.tag = "default:desc")
 	4: optional string              SortBy      (go.tag = "default:create_time")
 	5: optional list<ArticleStatus> Statuses
@@ -52,8 +52,8 @@ struct ListArticlesRequest {
 
 struct ListArticlesResponse {
 	1: required i64           TotalCount
-	2: required i64           PageNumber
-	3: required i64           PageSize
+	2: required i32           PageNumber
+	3: required i32           PageSize
 	4: required list<Article> Articles
 }
 

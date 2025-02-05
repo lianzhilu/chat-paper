@@ -1964,8 +1964,8 @@ func (p *UpdateArticleRequest) Field4DeepEqual(src *ArticleStatus) bool {
 }
 
 type ListArticlesRequest struct {
-	PageNumber *int64          `thrift:"PageNumber,1,optional" frugal:"1,optional,i64" default:1`
-	PageSize   *int64          `thrift:"PageSize,2,optional" frugal:"2,optional,i64" default:10`
+	PageNumber *int32          `thrift:"PageNumber,1,optional" frugal:"1,optional,i32" default:1`
+	PageSize   *int32          `thrift:"PageSize,2,optional" frugal:"2,optional,i32" default:10`
 	SortOrder  *string         `thrift:"SortOrder,3,optional" frugal:"3,optional,string" default:desc`
 	SortBy     *string         `thrift:"SortBy,4,optional" frugal:"4,optional,string" default:create_time`
 	Statuses   []ArticleStatus `thrift:"Statuses,5,optional" frugal:"5,optional,list<string>" json:"Statuses,omitempty"`
@@ -1979,18 +1979,18 @@ func NewListArticlesRequest() *ListArticlesRequest {
 func (p *ListArticlesRequest) InitDefault() {
 }
 
-var ListArticlesRequest_PageNumber_DEFAULT int64
+var ListArticlesRequest_PageNumber_DEFAULT int32
 
-func (p *ListArticlesRequest) GetPageNumber() (v int64) {
+func (p *ListArticlesRequest) GetPageNumber() (v int32) {
 	if !p.IsSetPageNumber() {
 		return ListArticlesRequest_PageNumber_DEFAULT
 	}
 	return *p.PageNumber
 }
 
-var ListArticlesRequest_PageSize_DEFAULT int64
+var ListArticlesRequest_PageSize_DEFAULT int32
 
-func (p *ListArticlesRequest) GetPageSize() (v int64) {
+func (p *ListArticlesRequest) GetPageSize() (v int32) {
 	if !p.IsSetPageSize() {
 		return ListArticlesRequest_PageSize_DEFAULT
 	}
@@ -2032,10 +2032,10 @@ func (p *ListArticlesRequest) GetAuthorIDs() (v []string) {
 	}
 	return p.AuthorIDs
 }
-func (p *ListArticlesRequest) SetPageNumber(val *int64) {
+func (p *ListArticlesRequest) SetPageNumber(val *int32) {
 	p.PageNumber = val
 }
-func (p *ListArticlesRequest) SetPageSize(val *int64) {
+func (p *ListArticlesRequest) SetPageSize(val *int32) {
 	p.PageSize = val
 }
 func (p *ListArticlesRequest) SetSortOrder(val *string) {
@@ -2104,7 +2104,7 @@ func (p *ListArticlesRequest) Read(iprot thrift.TProtocol) (err error) {
 
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -2112,7 +2112,7 @@ func (p *ListArticlesRequest) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -2182,8 +2182,8 @@ ReadStructEndError:
 
 func (p *ListArticlesRequest) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field *int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field *int32
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
 		_field = &v
@@ -2193,8 +2193,8 @@ func (p *ListArticlesRequest) ReadField1(iprot thrift.TProtocol) error {
 }
 func (p *ListArticlesRequest) ReadField2(iprot thrift.TProtocol) error {
 
-	var _field *int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field *int32
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
 		_field = &v
@@ -2322,10 +2322,10 @@ WriteStructEndError:
 
 func (p *ListArticlesRequest) writeField1(oprot thrift.TProtocol) (err error) {
 	if p.IsSetPageNumber() {
-		if err = oprot.WriteFieldBegin("PageNumber", thrift.I64, 1); err != nil {
+		if err = oprot.WriteFieldBegin("PageNumber", thrift.I32, 1); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(*p.PageNumber); err != nil {
+		if err := oprot.WriteI32(*p.PageNumber); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -2341,10 +2341,10 @@ WriteFieldEndError:
 
 func (p *ListArticlesRequest) writeField2(oprot thrift.TProtocol) (err error) {
 	if p.IsSetPageSize() {
-		if err = oprot.WriteFieldBegin("PageSize", thrift.I64, 2); err != nil {
+		if err = oprot.WriteFieldBegin("PageSize", thrift.I32, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(*p.PageSize); err != nil {
+		if err := oprot.WriteI32(*p.PageSize); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -2485,7 +2485,7 @@ func (p *ListArticlesRequest) DeepEqual(ano *ListArticlesRequest) bool {
 	return true
 }
 
-func (p *ListArticlesRequest) Field1DeepEqual(src *int64) bool {
+func (p *ListArticlesRequest) Field1DeepEqual(src *int32) bool {
 
 	if p.PageNumber == src {
 		return true
@@ -2497,7 +2497,7 @@ func (p *ListArticlesRequest) Field1DeepEqual(src *int64) bool {
 	}
 	return true
 }
-func (p *ListArticlesRequest) Field2DeepEqual(src *int64) bool {
+func (p *ListArticlesRequest) Field2DeepEqual(src *int32) bool {
 
 	if p.PageSize == src {
 		return true
@@ -2562,8 +2562,8 @@ func (p *ListArticlesRequest) Field6DeepEqual(src []string) bool {
 
 type ListArticlesResponse struct {
 	TotalCount int64      `thrift:"TotalCount,1,required" frugal:"1,required,i64" json:"TotalCount"`
-	PageNumber int64      `thrift:"PageNumber,2,required" frugal:"2,required,i64" json:"PageNumber"`
-	PageSize   int64      `thrift:"PageSize,3,required" frugal:"3,required,i64" json:"PageSize"`
+	PageNumber int32      `thrift:"PageNumber,2,required" frugal:"2,required,i32" json:"PageNumber"`
+	PageSize   int32      `thrift:"PageSize,3,required" frugal:"3,required,i32" json:"PageSize"`
 	Articles   []*Article `thrift:"Articles,4,required" frugal:"4,required,list<Article>" json:"Articles"`
 }
 
@@ -2578,11 +2578,11 @@ func (p *ListArticlesResponse) GetTotalCount() (v int64) {
 	return p.TotalCount
 }
 
-func (p *ListArticlesResponse) GetPageNumber() (v int64) {
+func (p *ListArticlesResponse) GetPageNumber() (v int32) {
 	return p.PageNumber
 }
 
-func (p *ListArticlesResponse) GetPageSize() (v int64) {
+func (p *ListArticlesResponse) GetPageSize() (v int32) {
 	return p.PageSize
 }
 
@@ -2592,10 +2592,10 @@ func (p *ListArticlesResponse) GetArticles() (v []*Article) {
 func (p *ListArticlesResponse) SetTotalCount(val int64) {
 	p.TotalCount = val
 }
-func (p *ListArticlesResponse) SetPageNumber(val int64) {
+func (p *ListArticlesResponse) SetPageNumber(val int32) {
 	p.PageNumber = val
 }
-func (p *ListArticlesResponse) SetPageSize(val int64) {
+func (p *ListArticlesResponse) SetPageSize(val int32) {
 	p.PageSize = val
 }
 func (p *ListArticlesResponse) SetArticles(val []*Article) {
@@ -2642,7 +2642,7 @@ func (p *ListArticlesResponse) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -2651,7 +2651,7 @@ func (p *ListArticlesResponse) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 3:
-			if fieldTypeId == thrift.I64 {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -2731,8 +2731,8 @@ func (p *ListArticlesResponse) ReadField1(iprot thrift.TProtocol) error {
 }
 func (p *ListArticlesResponse) ReadField2(iprot thrift.TProtocol) error {
 
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -2742,8 +2742,8 @@ func (p *ListArticlesResponse) ReadField2(iprot thrift.TProtocol) error {
 }
 func (p *ListArticlesResponse) ReadField3(iprot thrift.TProtocol) error {
 
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
+	var _field int32
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -2834,10 +2834,10 @@ WriteFieldEndError:
 }
 
 func (p *ListArticlesResponse) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("PageNumber", thrift.I64, 2); err != nil {
+	if err = oprot.WriteFieldBegin("PageNumber", thrift.I32, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.PageNumber); err != nil {
+	if err := oprot.WriteI32(p.PageNumber); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -2851,10 +2851,10 @@ WriteFieldEndError:
 }
 
 func (p *ListArticlesResponse) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("PageSize", thrift.I64, 3); err != nil {
+	if err = oprot.WriteFieldBegin("PageSize", thrift.I32, 3); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.PageSize); err != nil {
+	if err := oprot.WriteI32(p.PageSize); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -2928,14 +2928,14 @@ func (p *ListArticlesResponse) Field1DeepEqual(src int64) bool {
 	}
 	return true
 }
-func (p *ListArticlesResponse) Field2DeepEqual(src int64) bool {
+func (p *ListArticlesResponse) Field2DeepEqual(src int32) bool {
 
 	if p.PageNumber != src {
 		return false
 	}
 	return true
 }
-func (p *ListArticlesResponse) Field3DeepEqual(src int64) bool {
+func (p *ListArticlesResponse) Field3DeepEqual(src int32) bool {
 
 	if p.PageSize != src {
 		return false
