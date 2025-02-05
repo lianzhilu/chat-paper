@@ -24,7 +24,6 @@ func InitUserClient() {
 		client.WithRPCTimeout(30*time.Second), // rpc timeout
 		client.WithConnectTimeout(30000*time.Millisecond), // conn timeout
 		client.WithFailureRetry(retry.NewFailurePolicy()),
-		client.WithHostPorts(userServiceAddr),
 		client.WithResolver(r),
 	)
 	if err != nil {

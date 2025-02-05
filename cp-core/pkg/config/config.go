@@ -9,8 +9,10 @@ import (
 var runtimeConfig *CPRuntimeConfig
 
 const (
-	EnvCPCoreConfigDir     = "CP_CORE_CONFIG_DIR"
-	DefaultCPCoreConfigDir = "/Users/bytedance/Desktop/code/learn/chat-paper-github/cp-core/conf/"
+	EnvCPCoreConfigDir      = "CP_CORE_CONFIG_DIR"
+	DefaultCPCoreConfigDir  = "cp-core/conf/"
+	DefaultConfigFileSuffix = "yml"
+	DefaultConfigFileName   = "conf.local"
 )
 
 type MySQLConfig struct {
@@ -60,15 +62,14 @@ func getEnv(key, defaultValue string) string {
 func GetRuntimeConfig() *CPRuntimeConfig {
 	v := viper.New()
 	confDir := getEnv(EnvCPCoreConfigDir, DefaultCPCoreConfigDir)
-	v.SetConfigName("conf.local")
-	v.SetConfigType("yml")
+	v.SetConfigName(DefaultConfigFileName)
+	v.SetConfigType(DefaultConfigFileSuffix)
 	v.AddConfigPath(confDir)
 
 	// important! do not miss this step
 	if err := v.ReadInConfig(); err != nil {
 		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
-
 	runtimeConfig = &CPRuntimeConfig{}
 	err := v.Unmarshal(runtimeConfig)
 	if err != nil {
