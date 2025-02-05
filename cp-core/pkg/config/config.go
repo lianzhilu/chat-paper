@@ -21,6 +21,11 @@ type MySQLConfig struct {
 	MySQLPort     string `mapstructure:"CP_MYSQL_PORT"`
 }
 
+type EtcdConfig struct {
+	EtcdHost string `mapstructure:"CP_ETCD_HOST"`
+	EtcdPort string `mapstructure:"CP_ETCD_PORT"`
+}
+
 type GatewayConfig struct {
 	GateWayHost string `mapstructure:"CP_GATEWAY_HOST"`
 	GateWayPort string `mapstructure:"CP_GATEWAY_PORT"`
@@ -38,6 +43,7 @@ type ArticleServiceConfig struct {
 
 type CPRuntimeConfig struct {
 	MySQLConfig          MySQLConfig          `mapstructure:"CP_MYSQL_CONFIG"`
+	EtcdConfig           EtcdConfig           `mapstructure:"CP_ETCD_CONFIG"`
 	GatewayConfig        GatewayConfig        `mapstructure:"CP_GATEWAY_CONFIG"`
 	UserServiceConfig    UserServiceConfig    `mapstructure:"CP_USER_SERVICE_CONFIG"`
 	ArticleServiceConfig ArticleServiceConfig `mapstructure:"CP_ARTICLE_SERVICE_CONFIG"`
