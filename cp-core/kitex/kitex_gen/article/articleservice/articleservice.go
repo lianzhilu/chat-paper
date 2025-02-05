@@ -8,6 +8,7 @@ import (
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	article "github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
+	base "github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 )
 
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
@@ -17,6 +18,34 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		createArticleHandler,
 		newArticleServiceCreateArticleArgs,
 		newArticleServiceCreateArticleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetArticle": kitex.NewMethodInfo(
+		getArticleHandler,
+		newArticleServiceGetArticleArgs,
+		newArticleServiceGetArticleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ListArticles": kitex.NewMethodInfo(
+		listArticlesHandler,
+		newArticleServiceListArticlesArgs,
+		newArticleServiceListArticlesResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdateArticle": kitex.NewMethodInfo(
+		updateArticleHandler,
+		newArticleServiceUpdateArticleArgs,
+		newArticleServiceUpdateArticleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DeleteArticle": kitex.NewMethodInfo(
+		deleteArticleHandler,
+		newArticleServiceDeleteArticleArgs,
+		newArticleServiceDeleteArticleResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -104,6 +133,78 @@ func newArticleServiceCreateArticleResult() interface{} {
 	return article.NewArticleServiceCreateArticleResult()
 }
 
+func getArticleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*article.ArticleServiceGetArticleArgs)
+	realResult := result.(*article.ArticleServiceGetArticleResult)
+	success, err := handler.(article.ArticleService).GetArticle(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newArticleServiceGetArticleArgs() interface{} {
+	return article.NewArticleServiceGetArticleArgs()
+}
+
+func newArticleServiceGetArticleResult() interface{} {
+	return article.NewArticleServiceGetArticleResult()
+}
+
+func listArticlesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*article.ArticleServiceListArticlesArgs)
+	realResult := result.(*article.ArticleServiceListArticlesResult)
+	success, err := handler.(article.ArticleService).ListArticles(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newArticleServiceListArticlesArgs() interface{} {
+	return article.NewArticleServiceListArticlesArgs()
+}
+
+func newArticleServiceListArticlesResult() interface{} {
+	return article.NewArticleServiceListArticlesResult()
+}
+
+func updateArticleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*article.ArticleServiceUpdateArticleArgs)
+	realResult := result.(*article.ArticleServiceUpdateArticleResult)
+	success, err := handler.(article.ArticleService).UpdateArticle(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newArticleServiceUpdateArticleArgs() interface{} {
+	return article.NewArticleServiceUpdateArticleArgs()
+}
+
+func newArticleServiceUpdateArticleResult() interface{} {
+	return article.NewArticleServiceUpdateArticleResult()
+}
+
+func deleteArticleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*article.ArticleServiceDeleteArticleArgs)
+	realResult := result.(*article.ArticleServiceDeleteArticleResult)
+	success, err := handler.(article.ArticleService).DeleteArticle(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newArticleServiceDeleteArticleArgs() interface{} {
+	return article.NewArticleServiceDeleteArticleArgs()
+}
+
+func newArticleServiceDeleteArticleResult() interface{} {
+	return article.NewArticleServiceDeleteArticleResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -119,6 +220,46 @@ func (p *kClient) CreateArticle(ctx context.Context, req *article.CreateArticleR
 	_args.Req = req
 	var _result article.ArticleServiceCreateArticleResult
 	if err = p.c.Call(ctx, "CreateArticle", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetArticle(ctx context.Context, req *article.GetArticleRequest) (r *article.Article, err error) {
+	var _args article.ArticleServiceGetArticleArgs
+	_args.Req = req
+	var _result article.ArticleServiceGetArticleResult
+	if err = p.c.Call(ctx, "GetArticle", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ListArticles(ctx context.Context, req *article.ListArticlesRequest) (r *article.ListArticlesResponse, err error) {
+	var _args article.ArticleServiceListArticlesArgs
+	_args.Req = req
+	var _result article.ArticleServiceListArticlesResult
+	if err = p.c.Call(ctx, "ListArticles", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateArticle(ctx context.Context, req *article.UpdateArticleRequest) (r *base.EmptyBody, err error) {
+	var _args article.ArticleServiceUpdateArticleArgs
+	_args.Req = req
+	var _result article.ArticleServiceUpdateArticleResult
+	if err = p.c.Call(ctx, "UpdateArticle", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteArticle(ctx context.Context, req *article.DeleteArticleRequest) (r *base.EmptyBody, err error) {
+	var _args article.ArticleServiceDeleteArticleArgs
+	_args.Req = req
+	var _result article.ArticleServiceDeleteArticleResult
+	if err = p.c.Call(ctx, "DeleteArticle", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

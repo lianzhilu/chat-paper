@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/constants"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/dal"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/model"
 	"gorm.io/gen/field"
@@ -39,6 +40,7 @@ type ArticleRepository interface {
 	GetArticle(ctx context.Context, id string) (*model.Article, error)
 	UpdateArticle(ctx context.Context, param *UpdateArticleParams) error
 	DeleteArticle(ctx context.Context, id string) error
+	ListArticles(ctx context.Context, param *ListArticlesParams) ([]*model.Article, int64, error)
 }
 
 type MySQLArticleRepository struct {
@@ -115,7 +117,7 @@ func (r *MySQLArticleRepository) DeleteArticle(ctx context.Context, id string) e
 	return nil
 }
 
-func (r *MySQLArticleRepository) ListArticles(ctx context.Context, param *ListArticlesParams) ([]*model.Article, error) {
+func (r *MySQLArticleRepository) ListArticles(ctx context.Context, param *ListArticlesParams) ([]*model.Article, int64, error) {
 	tCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	articleOrm := dal.Article
@@ -136,12 +138,16 @@ func (r *MySQLArticleRepository) ListArticles(ctx context.Context, param *ListAr
 	if param.PageSize > 0 {
 		query = query.Limit(param.PageSize)
 	}
+	count, err := query.Count()
+	if err != nil {
+		return nil, 0, err
+	}
 
 	sortByField, ok := articleOrm.GetFieldByName(param.SortBy)
 	if !ok {
 		sortByField = articleOrm.CreateTime
 	}
-	if param.SortOrder == "Asc" {
+	if param.SortOrder == constants.SortOrderAsc {
 		query.Order(sortByField)
 	} else {
 		query.Order(sortByField.Desc())
@@ -149,7 +155,7 @@ func (r *MySQLArticleRepository) ListArticles(ctx context.Context, param *ListAr
 
 	articles, err := query.Find()
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return articles, nil
+	return articles, count, nil
 }

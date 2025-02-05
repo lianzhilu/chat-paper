@@ -8,3 +8,7 @@ struct Error {
 	1: required string Code
 	2: required string Message
 }
+
+struct EmptyBody {
+
+}

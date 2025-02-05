@@ -7,11 +7,16 @@ import (
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 	article "github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
+	base "github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	CreateArticle(ctx context.Context, req *article.CreateArticleRequest, callOptions ...callopt.Option) (r *article.CreateArticleResponse, err error)
+	GetArticle(ctx context.Context, req *article.GetArticleRequest, callOptions ...callopt.Option) (r *article.Article, err error)
+	ListArticles(ctx context.Context, req *article.ListArticlesRequest, callOptions ...callopt.Option) (r *article.ListArticlesResponse, err error)
+	UpdateArticle(ctx context.Context, req *article.UpdateArticleRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
+	DeleteArticle(ctx context.Context, req *article.DeleteArticleRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -46,4 +51,24 @@ type kArticleServiceClient struct {
 func (p *kArticleServiceClient) CreateArticle(ctx context.Context, req *article.CreateArticleRequest, callOptions ...callopt.Option) (r *article.CreateArticleResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateArticle(ctx, req)
+}
+
+func (p *kArticleServiceClient) GetArticle(ctx context.Context, req *article.GetArticleRequest, callOptions ...callopt.Option) (r *article.Article, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetArticle(ctx, req)
+}
+
+func (p *kArticleServiceClient) ListArticles(ctx context.Context, req *article.ListArticlesRequest, callOptions ...callopt.Option) (r *article.ListArticlesResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ListArticles(ctx, req)
+}
+
+func (p *kArticleServiceClient) UpdateArticle(ctx context.Context, req *article.UpdateArticleRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateArticle(ctx, req)
+}
+
+func (p *kArticleServiceClient) DeleteArticle(ctx context.Context, req *article.DeleteArticleRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteArticle(ctx, req)
 }

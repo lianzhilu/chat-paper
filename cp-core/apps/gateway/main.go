@@ -13,12 +13,20 @@ var (
 )
 
 func registerGroup(hz *server.Hertz) {
-	chatpaper := hz.Group("/chatpaper")
+	chatpaper := hz.Group("/v1")
 	{
 		user := chatpaper.Group("/user")
 		{
-			user.POST("/register/", handler.Register)
-			user.POST("/login/", handler.Login)
+			user.POST("/register", handler.Register)
+			user.POST("/login", handler.Login)
+		}
+		article := chatpaper.Group("/article")
+		{
+			article.POST("/", handler.CreateArticle)
+			article.GET("/", handler.GetArticle)
+			article.PUT("/", handler.UpdateArticle)
+			article.DELETE("/", handler.DeleteArticle)
+			article.GET("/list", handler.ListArticles)
 		}
 	}
 }
