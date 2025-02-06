@@ -16,39 +16,49 @@ import (
 )
 
 var (
-	Q       = new(Query)
-	Article *article
-	User    *user
+	Q               = new(Query)
+	Article         *article
+	Comment         *comment
+	CommentContents *commentContents
+	User            *user
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Article = &Q.Article
+	Comment = &Q.Comment
+	CommentContents = &Q.CommentContents
 	User = &Q.User
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:      db,
-		Article: newArticle(db, opts...),
-		User:    newUser(db, opts...),
+		db:              db,
+		Article:         newArticle(db, opts...),
+		Comment:         newComment(db, opts...),
+		CommentContents: newCommentContents(db, opts...),
+		User:            newUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Article article
-	User    user
+	Article         article
+	Comment         comment
+	CommentContents commentContents
+	User            user
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:      db,
-		Article: q.Article.clone(db),
-		User:    q.User.clone(db),
+		db:              db,
+		Article:         q.Article.clone(db),
+		Comment:         q.Comment.clone(db),
+		CommentContents: q.CommentContents.clone(db),
+		User:            q.User.clone(db),
 	}
 }
 
@@ -62,21 +72,27 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:      db,
-		Article: q.Article.replaceDB(db),
-		User:    q.User.replaceDB(db),
+		db:              db,
+		Article:         q.Article.replaceDB(db),
+		Comment:         q.Comment.replaceDB(db),
+		CommentContents: q.CommentContents.replaceDB(db),
+		User:            q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Article IArticleDo
-	User    IUserDo
+	Article         IArticleDo
+	Comment         ICommentDo
+	CommentContents ICommentContentsDo
+	User            IUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Article: q.Article.WithContext(ctx),
-		User:    q.User.WithContext(ctx),
+		Article:         q.Article.WithContext(ctx),
+		Comment:         q.Comment.WithContext(ctx),
+		CommentContents: q.CommentContents.WithContext(ctx),
+		User:            q.User.WithContext(ctx),
 	}
 }
 

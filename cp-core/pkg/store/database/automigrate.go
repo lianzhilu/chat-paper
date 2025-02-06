@@ -8,6 +8,8 @@ import (
 var models = []interface{}{
 	model.User{},
 	model.Article{},
+	model.Comment{},
+	model.CommentContents{},
 }
 
 func AutoMigrate(db *gorm.DB) error {

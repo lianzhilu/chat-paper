@@ -12,7 +12,7 @@ type Article struct {
 	AuthorID     string                `gorm:"type:varchar(128);not null;comment:文章作者"`
 	Title        string                `gorm:"type:varchar(128);not null;comment:文章标题"`
 	Status       article.ArticleStatus `gorm:"type:varchar(128);not null;comment:文章状态"`
-	Content      string                `gorm:"type:varchar(255);not null;comment:文章内容"`
+	Content      string                `gorm:"type:text;not null;comment:文章内容"`
 	ViewCount    uint64                `gorm:"type:int;not null;default:0;comment:文章阅读量"`
 	LikeCount    uint64                `gorm:"type:int;not null;default:0;comment:文章点赞量"`
 	CommentCount uint64                `gorm:"type:int;not null;default:0;comment:文章评论量"`

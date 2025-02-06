@@ -13,6 +13,8 @@ func GenerateGorm(outPath string) {
 	g.ApplyBasic(
 		model.User{},
 		model.Article{},
+		model.Comment{},
+		model.CommentContents{},
 	)
 	g.Execute()
 }
