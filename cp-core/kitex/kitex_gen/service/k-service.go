@@ -12,12 +12,14 @@ import (
 
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
+	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/comment"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user"
 )
 
 var (
 	_ = article.KitexUnusedProtection
 	_ = base.KitexUnusedProtection
+	_ = comment.KitexUnusedProtection
 	_ = user.KitexUnusedProtection
 )
 
