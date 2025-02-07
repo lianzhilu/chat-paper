@@ -14,7 +14,7 @@ func GenerateGorm(outPath string) {
 		model.User{},
 		model.Article{},
 		model.Comment{},
-		model.CommentContents{},
+		model.CommentContent{},
 	)
 	g.Execute()
 }

@@ -19,28 +19,28 @@ import (
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/model"
 )
 
-func newCommentContents(db *gorm.DB, opts ...gen.DOOption) commentContents {
-	_commentContents := commentContents{}
+func newCommentContent(db *gorm.DB, opts ...gen.DOOption) commentContent {
+	_commentContent := commentContent{}
 
-	_commentContents.commentContentsDo.UseDB(db, opts...)
-	_commentContents.commentContentsDo.UseModel(&model.CommentContents{})
+	_commentContent.commentContentDo.UseDB(db, opts...)
+	_commentContent.commentContentDo.UseModel(&model.CommentContent{})
 
-	tableName := _commentContents.commentContentsDo.TableName()
-	_commentContents.ALL = field.NewAsterisk(tableName)
-	_commentContents.ID = field.NewUint64(tableName, "id")
-	_commentContents.CommentID = field.NewString(tableName, "sid")
-	_commentContents.Content = field.NewString(tableName, "content")
-	_commentContents.CreateTime = field.NewTime(tableName, "create_time")
-	_commentContents.UpdateTime = field.NewTime(tableName, "update_time")
-	_commentContents.DeleteTime = field.NewUint(tableName, "delete_time")
+	tableName := _commentContent.commentContentDo.TableName()
+	_commentContent.ALL = field.NewAsterisk(tableName)
+	_commentContent.ID = field.NewUint64(tableName, "id")
+	_commentContent.CommentID = field.NewString(tableName, "sid")
+	_commentContent.Content = field.NewString(tableName, "content")
+	_commentContent.CreateTime = field.NewTime(tableName, "create_time")
+	_commentContent.UpdateTime = field.NewTime(tableName, "update_time")
+	_commentContent.DeleteTime = field.NewUint(tableName, "delete_time")
 
-	_commentContents.fillFieldMap()
+	_commentContent.fillFieldMap()
 
-	return _commentContents
+	return _commentContent
 }
 
-type commentContents struct {
-	commentContentsDo commentContentsDo
+type commentContent struct {
+	commentContentDo commentContentDo
 
 	ALL        field.Asterisk
 	ID         field.Uint64
@@ -53,17 +53,17 @@ type commentContents struct {
 	fieldMap map[string]field.Expr
 }
 
-func (c commentContents) Table(newTableName string) *commentContents {
-	c.commentContentsDo.UseTable(newTableName)
+func (c commentContent) Table(newTableName string) *commentContent {
+	c.commentContentDo.UseTable(newTableName)
 	return c.updateTableName(newTableName)
 }
 
-func (c commentContents) As(alias string) *commentContents {
-	c.commentContentsDo.DO = *(c.commentContentsDo.As(alias).(*gen.DO))
+func (c commentContent) As(alias string) *commentContent {
+	c.commentContentDo.DO = *(c.commentContentDo.As(alias).(*gen.DO))
 	return c.updateTableName(alias)
 }
 
-func (c *commentContents) updateTableName(table string) *commentContents {
+func (c *commentContent) updateTableName(table string) *commentContent {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint64(table, "id")
 	c.CommentID = field.NewString(table, "sid")
@@ -77,19 +77,19 @@ func (c *commentContents) updateTableName(table string) *commentContents {
 	return c
 }
 
-func (c *commentContents) WithContext(ctx context.Context) ICommentContentsDo {
-	return c.commentContentsDo.WithContext(ctx)
+func (c *commentContent) WithContext(ctx context.Context) ICommentContentDo {
+	return c.commentContentDo.WithContext(ctx)
 }
 
-func (c commentContents) TableName() string { return c.commentContentsDo.TableName() }
+func (c commentContent) TableName() string { return c.commentContentDo.TableName() }
 
-func (c commentContents) Alias() string { return c.commentContentsDo.Alias() }
+func (c commentContent) Alias() string { return c.commentContentDo.Alias() }
 
-func (c commentContents) Columns(cols ...field.Expr) gen.Columns {
-	return c.commentContentsDo.Columns(cols...)
+func (c commentContent) Columns(cols ...field.Expr) gen.Columns {
+	return c.commentContentDo.Columns(cols...)
 }
 
-func (c *commentContents) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
+func (c *commentContent) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 	_f, ok := c.fieldMap[fieldName]
 	if !ok || _f == nil {
 		return nil, false
@@ -98,7 +98,7 @@ func (c *commentContents) GetFieldByName(fieldName string) (field.OrderExpr, boo
 	return _oe, ok
 }
 
-func (c *commentContents) fillFieldMap() {
+func (c *commentContent) fillFieldMap() {
 	c.fieldMap = make(map[string]field.Expr, 6)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["sid"] = c.CommentID
@@ -108,58 +108,58 @@ func (c *commentContents) fillFieldMap() {
 	c.fieldMap["delete_time"] = c.DeleteTime
 }
 
-func (c commentContents) clone(db *gorm.DB) commentContents {
-	c.commentContentsDo.ReplaceConnPool(db.Statement.ConnPool)
+func (c commentContent) clone(db *gorm.DB) commentContent {
+	c.commentContentDo.ReplaceConnPool(db.Statement.ConnPool)
 	return c
 }
 
-func (c commentContents) replaceDB(db *gorm.DB) commentContents {
-	c.commentContentsDo.ReplaceDB(db)
+func (c commentContent) replaceDB(db *gorm.DB) commentContent {
+	c.commentContentDo.ReplaceDB(db)
 	return c
 }
 
-type commentContentsDo struct{ gen.DO }
+type commentContentDo struct{ gen.DO }
 
-type ICommentContentsDo interface {
+type ICommentContentDo interface {
 	gen.SubQuery
-	Debug() ICommentContentsDo
-	WithContext(ctx context.Context) ICommentContentsDo
+	Debug() ICommentContentDo
+	WithContext(ctx context.Context) ICommentContentDo
 	WithResult(fc func(tx gen.Dao)) gen.ResultInfo
 	ReplaceDB(db *gorm.DB)
-	ReadDB() ICommentContentsDo
-	WriteDB() ICommentContentsDo
+	ReadDB() ICommentContentDo
+	WriteDB() ICommentContentDo
 	As(alias string) gen.Dao
-	Session(config *gorm.Session) ICommentContentsDo
+	Session(config *gorm.Session) ICommentContentDo
 	Columns(cols ...field.Expr) gen.Columns
-	Clauses(conds ...clause.Expression) ICommentContentsDo
-	Not(conds ...gen.Condition) ICommentContentsDo
-	Or(conds ...gen.Condition) ICommentContentsDo
-	Select(conds ...field.Expr) ICommentContentsDo
-	Where(conds ...gen.Condition) ICommentContentsDo
-	Order(conds ...field.Expr) ICommentContentsDo
-	Distinct(cols ...field.Expr) ICommentContentsDo
-	Omit(cols ...field.Expr) ICommentContentsDo
-	Join(table schema.Tabler, on ...field.Expr) ICommentContentsDo
-	LeftJoin(table schema.Tabler, on ...field.Expr) ICommentContentsDo
-	RightJoin(table schema.Tabler, on ...field.Expr) ICommentContentsDo
-	Group(cols ...field.Expr) ICommentContentsDo
-	Having(conds ...gen.Condition) ICommentContentsDo
-	Limit(limit int) ICommentContentsDo
-	Offset(offset int) ICommentContentsDo
+	Clauses(conds ...clause.Expression) ICommentContentDo
+	Not(conds ...gen.Condition) ICommentContentDo
+	Or(conds ...gen.Condition) ICommentContentDo
+	Select(conds ...field.Expr) ICommentContentDo
+	Where(conds ...gen.Condition) ICommentContentDo
+	Order(conds ...field.Expr) ICommentContentDo
+	Distinct(cols ...field.Expr) ICommentContentDo
+	Omit(cols ...field.Expr) ICommentContentDo
+	Join(table schema.Tabler, on ...field.Expr) ICommentContentDo
+	LeftJoin(table schema.Tabler, on ...field.Expr) ICommentContentDo
+	RightJoin(table schema.Tabler, on ...field.Expr) ICommentContentDo
+	Group(cols ...field.Expr) ICommentContentDo
+	Having(conds ...gen.Condition) ICommentContentDo
+	Limit(limit int) ICommentContentDo
+	Offset(offset int) ICommentContentDo
 	Count() (count int64, err error)
-	Scopes(funcs ...func(gen.Dao) gen.Dao) ICommentContentsDo
-	Unscoped() ICommentContentsDo
-	Create(values ...*model.CommentContents) error
-	CreateInBatches(values []*model.CommentContents, batchSize int) error
-	Save(values ...*model.CommentContents) error
-	First() (*model.CommentContents, error)
-	Take() (*model.CommentContents, error)
-	Last() (*model.CommentContents, error)
-	Find() ([]*model.CommentContents, error)
-	FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*model.CommentContents, err error)
-	FindInBatches(result *[]*model.CommentContents, batchSize int, fc func(tx gen.Dao, batch int) error) error
+	Scopes(funcs ...func(gen.Dao) gen.Dao) ICommentContentDo
+	Unscoped() ICommentContentDo
+	Create(values ...*model.CommentContent) error
+	CreateInBatches(values []*model.CommentContent, batchSize int) error
+	Save(values ...*model.CommentContent) error
+	First() (*model.CommentContent, error)
+	Take() (*model.CommentContent, error)
+	Last() (*model.CommentContent, error)
+	Find() ([]*model.CommentContent, error)
+	FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*model.CommentContent, err error)
+	FindInBatches(result *[]*model.CommentContent, batchSize int, fc func(tx gen.Dao, batch int) error) error
 	Pluck(column field.Expr, dest interface{}) error
-	Delete(...*model.CommentContents) (info gen.ResultInfo, err error)
+	Delete(...*model.CommentContent) (info gen.ResultInfo, err error)
 	Update(column field.Expr, value interface{}) (info gen.ResultInfo, err error)
 	UpdateSimple(columns ...field.AssignExpr) (info gen.ResultInfo, err error)
 	Updates(value interface{}) (info gen.ResultInfo, err error)
@@ -167,163 +167,163 @@ type ICommentContentsDo interface {
 	UpdateColumnSimple(columns ...field.AssignExpr) (info gen.ResultInfo, err error)
 	UpdateColumns(value interface{}) (info gen.ResultInfo, err error)
 	UpdateFrom(q gen.SubQuery) gen.Dao
-	Attrs(attrs ...field.AssignExpr) ICommentContentsDo
-	Assign(attrs ...field.AssignExpr) ICommentContentsDo
-	Joins(fields ...field.RelationField) ICommentContentsDo
-	Preload(fields ...field.RelationField) ICommentContentsDo
-	FirstOrInit() (*model.CommentContents, error)
-	FirstOrCreate() (*model.CommentContents, error)
-	FindByPage(offset int, limit int) (result []*model.CommentContents, count int64, err error)
+	Attrs(attrs ...field.AssignExpr) ICommentContentDo
+	Assign(attrs ...field.AssignExpr) ICommentContentDo
+	Joins(fields ...field.RelationField) ICommentContentDo
+	Preload(fields ...field.RelationField) ICommentContentDo
+	FirstOrInit() (*model.CommentContent, error)
+	FirstOrCreate() (*model.CommentContent, error)
+	FindByPage(offset int, limit int) (result []*model.CommentContent, count int64, err error)
 	ScanByPage(result interface{}, offset int, limit int) (count int64, err error)
 	Scan(result interface{}) (err error)
-	Returning(value interface{}, columns ...string) ICommentContentsDo
+	Returning(value interface{}, columns ...string) ICommentContentDo
 	UnderlyingDB() *gorm.DB
 	schema.Tabler
 }
 
-func (c commentContentsDo) Debug() ICommentContentsDo {
+func (c commentContentDo) Debug() ICommentContentDo {
 	return c.withDO(c.DO.Debug())
 }
 
-func (c commentContentsDo) WithContext(ctx context.Context) ICommentContentsDo {
+func (c commentContentDo) WithContext(ctx context.Context) ICommentContentDo {
 	return c.withDO(c.DO.WithContext(ctx))
 }
 
-func (c commentContentsDo) ReadDB() ICommentContentsDo {
+func (c commentContentDo) ReadDB() ICommentContentDo {
 	return c.Clauses(dbresolver.Read)
 }
 
-func (c commentContentsDo) WriteDB() ICommentContentsDo {
+func (c commentContentDo) WriteDB() ICommentContentDo {
 	return c.Clauses(dbresolver.Write)
 }
 
-func (c commentContentsDo) Session(config *gorm.Session) ICommentContentsDo {
+func (c commentContentDo) Session(config *gorm.Session) ICommentContentDo {
 	return c.withDO(c.DO.Session(config))
 }
 
-func (c commentContentsDo) Clauses(conds ...clause.Expression) ICommentContentsDo {
+func (c commentContentDo) Clauses(conds ...clause.Expression) ICommentContentDo {
 	return c.withDO(c.DO.Clauses(conds...))
 }
 
-func (c commentContentsDo) Returning(value interface{}, columns ...string) ICommentContentsDo {
+func (c commentContentDo) Returning(value interface{}, columns ...string) ICommentContentDo {
 	return c.withDO(c.DO.Returning(value, columns...))
 }
 
-func (c commentContentsDo) Not(conds ...gen.Condition) ICommentContentsDo {
+func (c commentContentDo) Not(conds ...gen.Condition) ICommentContentDo {
 	return c.withDO(c.DO.Not(conds...))
 }
 
-func (c commentContentsDo) Or(conds ...gen.Condition) ICommentContentsDo {
+func (c commentContentDo) Or(conds ...gen.Condition) ICommentContentDo {
 	return c.withDO(c.DO.Or(conds...))
 }
 
-func (c commentContentsDo) Select(conds ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) Select(conds ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.Select(conds...))
 }
 
-func (c commentContentsDo) Where(conds ...gen.Condition) ICommentContentsDo {
+func (c commentContentDo) Where(conds ...gen.Condition) ICommentContentDo {
 	return c.withDO(c.DO.Where(conds...))
 }
 
-func (c commentContentsDo) Order(conds ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) Order(conds ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.Order(conds...))
 }
 
-func (c commentContentsDo) Distinct(cols ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) Distinct(cols ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.Distinct(cols...))
 }
 
-func (c commentContentsDo) Omit(cols ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) Omit(cols ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.Omit(cols...))
 }
 
-func (c commentContentsDo) Join(table schema.Tabler, on ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) Join(table schema.Tabler, on ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.Join(table, on...))
 }
 
-func (c commentContentsDo) LeftJoin(table schema.Tabler, on ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) LeftJoin(table schema.Tabler, on ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.LeftJoin(table, on...))
 }
 
-func (c commentContentsDo) RightJoin(table schema.Tabler, on ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) RightJoin(table schema.Tabler, on ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.RightJoin(table, on...))
 }
 
-func (c commentContentsDo) Group(cols ...field.Expr) ICommentContentsDo {
+func (c commentContentDo) Group(cols ...field.Expr) ICommentContentDo {
 	return c.withDO(c.DO.Group(cols...))
 }
 
-func (c commentContentsDo) Having(conds ...gen.Condition) ICommentContentsDo {
+func (c commentContentDo) Having(conds ...gen.Condition) ICommentContentDo {
 	return c.withDO(c.DO.Having(conds...))
 }
 
-func (c commentContentsDo) Limit(limit int) ICommentContentsDo {
+func (c commentContentDo) Limit(limit int) ICommentContentDo {
 	return c.withDO(c.DO.Limit(limit))
 }
 
-func (c commentContentsDo) Offset(offset int) ICommentContentsDo {
+func (c commentContentDo) Offset(offset int) ICommentContentDo {
 	return c.withDO(c.DO.Offset(offset))
 }
 
-func (c commentContentsDo) Scopes(funcs ...func(gen.Dao) gen.Dao) ICommentContentsDo {
+func (c commentContentDo) Scopes(funcs ...func(gen.Dao) gen.Dao) ICommentContentDo {
 	return c.withDO(c.DO.Scopes(funcs...))
 }
 
-func (c commentContentsDo) Unscoped() ICommentContentsDo {
+func (c commentContentDo) Unscoped() ICommentContentDo {
 	return c.withDO(c.DO.Unscoped())
 }
 
-func (c commentContentsDo) Create(values ...*model.CommentContents) error {
+func (c commentContentDo) Create(values ...*model.CommentContent) error {
 	if len(values) == 0 {
 		return nil
 	}
 	return c.DO.Create(values)
 }
 
-func (c commentContentsDo) CreateInBatches(values []*model.CommentContents, batchSize int) error {
+func (c commentContentDo) CreateInBatches(values []*model.CommentContent, batchSize int) error {
 	return c.DO.CreateInBatches(values, batchSize)
 }
 
 // Save : !!! underlying implementation is different with GORM
 // The method is equivalent to executing the statement: db.Clauses(clause.OnConflict{UpdateAll: true}).Create(values)
-func (c commentContentsDo) Save(values ...*model.CommentContents) error {
+func (c commentContentDo) Save(values ...*model.CommentContent) error {
 	if len(values) == 0 {
 		return nil
 	}
 	return c.DO.Save(values)
 }
 
-func (c commentContentsDo) First() (*model.CommentContents, error) {
+func (c commentContentDo) First() (*model.CommentContent, error) {
 	if result, err := c.DO.First(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.CommentContents), nil
+		return result.(*model.CommentContent), nil
 	}
 }
 
-func (c commentContentsDo) Take() (*model.CommentContents, error) {
+func (c commentContentDo) Take() (*model.CommentContent, error) {
 	if result, err := c.DO.Take(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.CommentContents), nil
+		return result.(*model.CommentContent), nil
 	}
 }
 
-func (c commentContentsDo) Last() (*model.CommentContents, error) {
+func (c commentContentDo) Last() (*model.CommentContent, error) {
 	if result, err := c.DO.Last(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.CommentContents), nil
+		return result.(*model.CommentContent), nil
 	}
 }
 
-func (c commentContentsDo) Find() ([]*model.CommentContents, error) {
+func (c commentContentDo) Find() ([]*model.CommentContent, error) {
 	result, err := c.DO.Find()
-	return result.([]*model.CommentContents), err
+	return result.([]*model.CommentContent), err
 }
 
-func (c commentContentsDo) FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*model.CommentContents, err error) {
-	buf := make([]*model.CommentContents, 0, batchSize)
+func (c commentContentDo) FindInBatch(batchSize int, fc func(tx gen.Dao, batch int) error) (results []*model.CommentContent, err error) {
+	buf := make([]*model.CommentContent, 0, batchSize)
 	err = c.DO.FindInBatches(&buf, batchSize, func(tx gen.Dao, batch int) error {
 		defer func() { results = append(results, buf...) }()
 		return fc(tx, batch)
@@ -331,49 +331,49 @@ func (c commentContentsDo) FindInBatch(batchSize int, fc func(tx gen.Dao, batch 
 	return results, err
 }
 
-func (c commentContentsDo) FindInBatches(result *[]*model.CommentContents, batchSize int, fc func(tx gen.Dao, batch int) error) error {
+func (c commentContentDo) FindInBatches(result *[]*model.CommentContent, batchSize int, fc func(tx gen.Dao, batch int) error) error {
 	return c.DO.FindInBatches(result, batchSize, fc)
 }
 
-func (c commentContentsDo) Attrs(attrs ...field.AssignExpr) ICommentContentsDo {
+func (c commentContentDo) Attrs(attrs ...field.AssignExpr) ICommentContentDo {
 	return c.withDO(c.DO.Attrs(attrs...))
 }
 
-func (c commentContentsDo) Assign(attrs ...field.AssignExpr) ICommentContentsDo {
+func (c commentContentDo) Assign(attrs ...field.AssignExpr) ICommentContentDo {
 	return c.withDO(c.DO.Assign(attrs...))
 }
 
-func (c commentContentsDo) Joins(fields ...field.RelationField) ICommentContentsDo {
+func (c commentContentDo) Joins(fields ...field.RelationField) ICommentContentDo {
 	for _, _f := range fields {
 		c = *c.withDO(c.DO.Joins(_f))
 	}
 	return &c
 }
 
-func (c commentContentsDo) Preload(fields ...field.RelationField) ICommentContentsDo {
+func (c commentContentDo) Preload(fields ...field.RelationField) ICommentContentDo {
 	for _, _f := range fields {
 		c = *c.withDO(c.DO.Preload(_f))
 	}
 	return &c
 }
 
-func (c commentContentsDo) FirstOrInit() (*model.CommentContents, error) {
+func (c commentContentDo) FirstOrInit() (*model.CommentContent, error) {
 	if result, err := c.DO.FirstOrInit(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.CommentContents), nil
+		return result.(*model.CommentContent), nil
 	}
 }
 
-func (c commentContentsDo) FirstOrCreate() (*model.CommentContents, error) {
+func (c commentContentDo) FirstOrCreate() (*model.CommentContent, error) {
 	if result, err := c.DO.FirstOrCreate(); err != nil {
 		return nil, err
 	} else {
-		return result.(*model.CommentContents), nil
+		return result.(*model.CommentContent), nil
 	}
 }
 
-func (c commentContentsDo) FindByPage(offset int, limit int) (result []*model.CommentContents, count int64, err error) {
+func (c commentContentDo) FindByPage(offset int, limit int) (result []*model.CommentContent, count int64, err error) {
 	result, err = c.Offset(offset).Limit(limit).Find()
 	if err != nil {
 		return
@@ -388,7 +388,7 @@ func (c commentContentsDo) FindByPage(offset int, limit int) (result []*model.Co
 	return
 }
 
-func (c commentContentsDo) ScanByPage(result interface{}, offset int, limit int) (count int64, err error) {
+func (c commentContentDo) ScanByPage(result interface{}, offset int, limit int) (count int64, err error) {
 	count, err = c.Count()
 	if err != nil {
 		return
@@ -398,15 +398,15 @@ func (c commentContentsDo) ScanByPage(result interface{}, offset int, limit int)
 	return
 }
 
-func (c commentContentsDo) Scan(result interface{}) (err error) {
+func (c commentContentDo) Scan(result interface{}) (err error) {
 	return c.DO.Scan(result)
 }
 
-func (c commentContentsDo) Delete(models ...*model.CommentContents) (result gen.ResultInfo, err error) {
+func (c commentContentDo) Delete(models ...*model.CommentContent) (result gen.ResultInfo, err error) {
 	return c.DO.Delete(models)
 }
 
-func (c *commentContentsDo) withDO(do gen.Dao) *commentContentsDo {
+func (c *commentContentDo) withDO(do gen.Dao) *commentContentDo {
 	c.DO = *do.(*gen.DO)
 	return c
 }

@@ -9,7 +9,7 @@ var models = []interface{}{
 	model.User{},
 	model.Article{},
 	model.Comment{},
-	model.CommentContents{},
+	model.CommentContent{},
 }
 
 func AutoMigrate(db *gorm.DB) error {

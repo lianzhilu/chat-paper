@@ -17,9 +17,16 @@ type CreateCommentParams struct {
 	Content   string
 }
 
+type UpdateCommentParams struct {
+	ID      string
+	Content string
+}
+
 type CommentRepository interface {
 	CreateComment(ctx context.Context, param CreateCommentParams) error
 	GetComment(ctx context.Context, id string) (*comment.CompletedComment, error)
+	UpdateComment(ctx context.Context, param UpdateCommentParams) error
+	DeleteComment(ctx context.Context, id string) error
 }
 
 type MySQLCommentRepository struct {
@@ -53,12 +60,12 @@ func (r *MySQLCommentRepository) CreateComment(ctx context.Context, param Create
 		}
 
 		// 2. create comment content
-		commentContent := &model.CommentContents{
+		commentContent := &model.CommentContent{
 			CommentID: param.ID,
 			Content:   param.Content,
 		}
 
-		err = tx.CommentContents.WithContext(tCtx).Create(commentContent)
+		err = tx.CommentContent.WithContext(tCtx).Create(commentContent)
 		if err != nil {
 			return err
 		}
@@ -77,14 +84,14 @@ func (r *MySQLCommentRepository) GetComment(ctx context.Context, id string) (*co
 	var completedComment *comment.CompletedComment
 
 	commentOrm := dal.Comment
-	commentContentOrm := dal.CommentContents
+	commentContentOrm := dal.CommentContent
 	query := dal.Use(r.DB)
 	err := query.Transaction(func(tx *dal.Query) error {
 		commentMeta, err := tx.Comment.WithContext(tCtx).Where(commentOrm.SID.Eq(id)).First()
 		if err != nil {
 			return err
 		}
-		commentContent, err := tx.CommentContents.WithContext(tCtx).Where(commentContentOrm.CommentID.Eq(id)).First()
+		commentContent, err := tx.CommentContent.WithContext(tCtx).Where(commentContentOrm.CommentID.Eq(id)).First()
 		if err != nil {
 			return err
 		}
@@ -101,4 +108,42 @@ func (r *MySQLCommentRepository) GetComment(ctx context.Context, id string) (*co
 		return nil, err
 	}
 	return completedComment, nil
+}
+
+func (r *MySQLCommentRepository) UpdateComment(ctx context.Context, param UpdateCommentParams) error {
+	tCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	commentContentOrm := dal.CommentContent
+	query := commentContentOrm.WithContext(tCtx)
+	_, err := query.Where(commentContentOrm.CommentID.Eq(param.ID)).Update(commentContentOrm.Content, param.Content)
+	if err != nil {
+		return err
+	}
+	return nil
+
+}
+
+func (r *MySQLCommentRepository) DeleteComment(ctx context.Context, id string) error {
+	tCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	commentOrm := dal.Comment
+	commentContentOrm := dal.CommentContent
+	query := dal.Use(r.DB)
+	err := query.Transaction(func(tx *dal.Query) error {
+		_, err := tx.Comment.WithContext(tCtx).Where(commentOrm.SID.Eq(id)).Delete()
+		if err != nil {
+			return err
+		}
+		_, err = tx.CommentContent.WithContext(tCtx).Where(commentContentOrm.CommentID.Eq(id)).Delete()
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	return nil
 }
