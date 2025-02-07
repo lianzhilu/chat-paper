@@ -560,42 +560,42 @@ func (p *CreateCommentResponse) Field1DeepEqual(src string) bool {
 	return true
 }
 
-type CommonService interface {
+type CommentService interface {
 	CreateComment(ctx context.Context, req *CreateCommentRequest) (r *CreateCommentResponse, err error)
 }
 
-type CommonServiceCreateCommentArgs struct {
+type CommentServiceCreateCommentArgs struct {
 	Req *CreateCommentRequest `thrift:"req,1" frugal:"1,default,CreateCommentRequest" json:"req"`
 }
 
-func NewCommonServiceCreateCommentArgs() *CommonServiceCreateCommentArgs {
-	return &CommonServiceCreateCommentArgs{}
+func NewCommentServiceCreateCommentArgs() *CommentServiceCreateCommentArgs {
+	return &CommentServiceCreateCommentArgs{}
 }
 
-func (p *CommonServiceCreateCommentArgs) InitDefault() {
+func (p *CommentServiceCreateCommentArgs) InitDefault() {
 }
 
-var CommonServiceCreateCommentArgs_Req_DEFAULT *CreateCommentRequest
+var CommentServiceCreateCommentArgs_Req_DEFAULT *CreateCommentRequest
 
-func (p *CommonServiceCreateCommentArgs) GetReq() (v *CreateCommentRequest) {
+func (p *CommentServiceCreateCommentArgs) GetReq() (v *CreateCommentRequest) {
 	if !p.IsSetReq() {
-		return CommonServiceCreateCommentArgs_Req_DEFAULT
+		return CommentServiceCreateCommentArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *CommonServiceCreateCommentArgs) SetReq(val *CreateCommentRequest) {
+func (p *CommentServiceCreateCommentArgs) SetReq(val *CreateCommentRequest) {
 	p.Req = val
 }
 
-var fieldIDToName_CommonServiceCreateCommentArgs = map[int16]string{
+var fieldIDToName_CommentServiceCreateCommentArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *CommonServiceCreateCommentArgs) IsSetReq() bool {
+func (p *CommentServiceCreateCommentArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *CommonServiceCreateCommentArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *CommentServiceCreateCommentArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -641,7 +641,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CommonServiceCreateCommentArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CommentServiceCreateCommentArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -651,7 +651,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *CommonServiceCreateCommentArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *CommentServiceCreateCommentArgs) ReadField1(iprot thrift.TProtocol) error {
 	_field := NewCreateCommentRequest()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -660,7 +660,7 @@ func (p *CommonServiceCreateCommentArgs) ReadField1(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *CommonServiceCreateCommentArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *CommentServiceCreateCommentArgs) Write(oprot thrift.TProtocol) (err error) {
 
 	var fieldId int16
 	if err = oprot.WriteStructBegin("CreateComment_args"); err != nil {
@@ -689,7 +689,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *CommonServiceCreateCommentArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *CommentServiceCreateCommentArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -706,15 +706,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *CommonServiceCreateCommentArgs) String() string {
+func (p *CommentServiceCreateCommentArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CommonServiceCreateCommentArgs(%+v)", *p)
+	return fmt.Sprintf("CommentServiceCreateCommentArgs(%+v)", *p)
 
 }
 
-func (p *CommonServiceCreateCommentArgs) DeepEqual(ano *CommonServiceCreateCommentArgs) bool {
+func (p *CommentServiceCreateCommentArgs) DeepEqual(ano *CommentServiceCreateCommentArgs) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -726,7 +726,7 @@ func (p *CommonServiceCreateCommentArgs) DeepEqual(ano *CommonServiceCreateComme
 	return true
 }
 
-func (p *CommonServiceCreateCommentArgs) Field1DeepEqual(src *CreateCommentRequest) bool {
+func (p *CommentServiceCreateCommentArgs) Field1DeepEqual(src *CreateCommentRequest) bool {
 
 	if !p.Req.DeepEqual(src) {
 		return false
@@ -734,38 +734,38 @@ func (p *CommonServiceCreateCommentArgs) Field1DeepEqual(src *CreateCommentReque
 	return true
 }
 
-type CommonServiceCreateCommentResult struct {
+type CommentServiceCreateCommentResult struct {
 	Success *CreateCommentResponse `thrift:"success,0,optional" frugal:"0,optional,CreateCommentResponse" json:"success,omitempty"`
 }
 
-func NewCommonServiceCreateCommentResult() *CommonServiceCreateCommentResult {
-	return &CommonServiceCreateCommentResult{}
+func NewCommentServiceCreateCommentResult() *CommentServiceCreateCommentResult {
+	return &CommentServiceCreateCommentResult{}
 }
 
-func (p *CommonServiceCreateCommentResult) InitDefault() {
+func (p *CommentServiceCreateCommentResult) InitDefault() {
 }
 
-var CommonServiceCreateCommentResult_Success_DEFAULT *CreateCommentResponse
+var CommentServiceCreateCommentResult_Success_DEFAULT *CreateCommentResponse
 
-func (p *CommonServiceCreateCommentResult) GetSuccess() (v *CreateCommentResponse) {
+func (p *CommentServiceCreateCommentResult) GetSuccess() (v *CreateCommentResponse) {
 	if !p.IsSetSuccess() {
-		return CommonServiceCreateCommentResult_Success_DEFAULT
+		return CommentServiceCreateCommentResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *CommonServiceCreateCommentResult) SetSuccess(x interface{}) {
+func (p *CommentServiceCreateCommentResult) SetSuccess(x interface{}) {
 	p.Success = x.(*CreateCommentResponse)
 }
 
-var fieldIDToName_CommonServiceCreateCommentResult = map[int16]string{
+var fieldIDToName_CommentServiceCreateCommentResult = map[int16]string{
 	0: "success",
 }
 
-func (p *CommonServiceCreateCommentResult) IsSetSuccess() bool {
+func (p *CommentServiceCreateCommentResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *CommonServiceCreateCommentResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *CommentServiceCreateCommentResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -811,7 +811,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CommonServiceCreateCommentResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CommentServiceCreateCommentResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -821,7 +821,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *CommonServiceCreateCommentResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *CommentServiceCreateCommentResult) ReadField0(iprot thrift.TProtocol) error {
 	_field := NewCreateCommentResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -830,7 +830,7 @@ func (p *CommonServiceCreateCommentResult) ReadField0(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *CommonServiceCreateCommentResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *CommentServiceCreateCommentResult) Write(oprot thrift.TProtocol) (err error) {
 
 	var fieldId int16
 	if err = oprot.WriteStructBegin("CreateComment_result"); err != nil {
@@ -859,7 +859,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *CommonServiceCreateCommentResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *CommentServiceCreateCommentResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -878,15 +878,15 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *CommonServiceCreateCommentResult) String() string {
+func (p *CommentServiceCreateCommentResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("CommonServiceCreateCommentResult(%+v)", *p)
+	return fmt.Sprintf("CommentServiceCreateCommentResult(%+v)", *p)
 
 }
 
-func (p *CommonServiceCreateCommentResult) DeepEqual(ano *CommonServiceCreateCommentResult) bool {
+func (p *CommentServiceCreateCommentResult) DeepEqual(ano *CommentServiceCreateCommentResult) bool {
 	if p == ano {
 		return true
 	} else if p == nil || ano == nil {
@@ -898,7 +898,7 @@ func (p *CommonServiceCreateCommentResult) DeepEqual(ano *CommonServiceCreateCom
 	return true
 }
 
-func (p *CommonServiceCreateCommentResult) Field0DeepEqual(src *CreateCommentResponse) bool {
+func (p *CommentServiceCreateCommentResult) Field0DeepEqual(src *CreateCommentResponse) bool {
 
 	if !p.Success.DeepEqual(src) {
 		return false

@@ -9,6 +9,6 @@ struct CreateCommentResponse {
     1: required string ID
 }
 
-service CommonService {
+service CommentService {
     CreateCommentResponse CreateComment(1: CreateCommentRequest req)
 }
