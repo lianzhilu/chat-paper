@@ -6,12 +6,16 @@ import (
 	"context"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
+	base "github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 	comment "github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/comment"
 )
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	CreateComment(ctx context.Context, req *comment.CreateCommentRequest, callOptions ...callopt.Option) (r *comment.CreateCommentResponse, err error)
+	GetComment(ctx context.Context, req *comment.GetCommentResponse, callOptions ...callopt.Option) (r *comment.CompletedComment, err error)
+	UpdateComment(ctx context.Context, req *comment.UpdateCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
+	DeleteComment(ctx context.Context, req *comment.DeleteCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -46,4 +50,19 @@ type kCommentServiceClient struct {
 func (p *kCommentServiceClient) CreateComment(ctx context.Context, req *comment.CreateCommentRequest, callOptions ...callopt.Option) (r *comment.CreateCommentResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateComment(ctx, req)
+}
+
+func (p *kCommentServiceClient) GetComment(ctx context.Context, req *comment.GetCommentResponse, callOptions ...callopt.Option) (r *comment.CompletedComment, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetComment(ctx, req)
+}
+
+func (p *kCommentServiceClient) UpdateComment(ctx context.Context, req *comment.UpdateCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateComment(ctx, req)
+}
+
+func (p *kCommentServiceClient) DeleteComment(ctx context.Context, req *comment.DeleteCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteComment(ctx, req)
 }

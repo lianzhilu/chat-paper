@@ -1,3 +1,5 @@
+include "base.thrift"
+
 struct CompletedComment {
     1: required string ID
     2: required string AuthorID
@@ -17,6 +19,22 @@ struct CreateCommentResponse {
     1: required string ID
 }
 
+struct GetCommentResponse {
+    1: required string ID
+}
+
+struct UpdateCommonResponse {
+    1: required string ID
+    2: optional string Content
+}
+
+struct DeleteCommonResponse {
+    1: required string ID
+}
+
 service CommentService {
     CreateCommentResponse CreateComment(1: CreateCommentRequest req)
+    CompletedComment GetComment(1: GetCommentResponse req)
+    base.EmptyBody UpdateComment(1: UpdateCommonResponse req)
+    base.EmptyBody DeleteComment(1: DeleteCommonResponse req)
 }
