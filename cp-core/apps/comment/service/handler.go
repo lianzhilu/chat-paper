@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/comment"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/generator"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/repository"
@@ -34,4 +35,33 @@ func (impl *CommentServiceImpl) CreateComment(ctx context.Context, req *comment.
 	return &comment.CreateCommentResponse{
 		ID: id,
 	}, nil
+}
+
+func (impl *CommentServiceImpl) GetComment(ctx context.Context, req *comment.GetCommentRequest) (resp *comment.CompletedComment, err error) {
+	ccm, err := impl.commentRepo.GetComment(ctx, req.ID)
+	if err != nil {
+		return nil, err
+	}
+	resp = convertCompleteCommentDo2GetCommentResponse(ccm)
+	return resp, nil
+}
+
+func (impl *CommentServiceImpl) UpdateComment(ctx context.Context, req *comment.UpdateCommonRequest) (resp *base.EmptyBody, err error) {
+	param := repository.UpdateCommentParams{
+		ID:      req.ID,
+		Content: req.Content,
+	}
+	err = impl.commentRepo.UpdateComment(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &base.EmptyBody{}, nil
+}
+
+func (impl *CommentServiceImpl) DeleteComment(ctx context.Context, req *comment.DeleteCommonRequest) (resp *base.EmptyBody, err error) {
+	err = impl.commentRepo.DeleteComment(ctx, req.ID)
+	if err != nil {
+		return nil, err
+	}
+	return &base.EmptyBody{}, nil
 }

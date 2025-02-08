@@ -38,6 +38,10 @@ func (p *CompletedComment) FastRead(buf []byte) (int, error) {
 	var issetArticleID bool = false
 	var issetParentID bool = false
 	var issetContent bool = false
+	var issetLikeCount bool = false
+	var issetCommentCount bool = false
+	var issetCreateTime bool = false
+	var issetUpdateTime bool = false
 	for {
 		fieldTypeId, fieldId, l, err = thrift.Binary.ReadFieldBegin(buf[offset:])
 		offset += l
@@ -123,6 +127,66 @@ func (p *CompletedComment) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 6:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField6(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetLikeCount = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField7(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetCommentCount = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 8:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField8(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetCreateTime = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 9:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField9(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetUpdateTime = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -154,6 +218,26 @@ func (p *CompletedComment) FastRead(buf []byte) (int, error) {
 
 	if !issetContent {
 		fieldId = 5
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetLikeCount {
+		fieldId = 6
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetCommentCount {
+		fieldId = 7
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetCreateTime {
+		fieldId = 8
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetUpdateTime {
+		fieldId = 9
 		goto RequiredFieldNotSetError
 	}
 	return offset, nil
@@ -237,6 +321,62 @@ func (p *CompletedComment) FastReadField5(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *CompletedComment) FastReadField6(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.LikeCount = _field
+	return offset, nil
+}
+
+func (p *CompletedComment) FastReadField7(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.CommentCount = _field
+	return offset, nil
+}
+
+func (p *CompletedComment) FastReadField8(buf []byte) (int, error) {
+	offset := 0
+
+	var _field string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.CreateTime = _field
+	return offset, nil
+}
+
+func (p *CompletedComment) FastReadField9(buf []byte) (int, error) {
+	offset := 0
+
+	var _field string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.UpdateTime = _field
+	return offset, nil
+}
+
 func (p *CompletedComment) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -244,11 +384,15 @@ func (p *CompletedComment) FastWrite(buf []byte) int {
 func (p *CompletedComment) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
+		offset += p.fastWriteField6(buf[offset:], w)
+		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
+		offset += p.fastWriteField8(buf[offset:], w)
+		offset += p.fastWriteField9(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -262,6 +406,10 @@ func (p *CompletedComment) BLength() int {
 		l += p.field3Length()
 		l += p.field4Length()
 		l += p.field5Length()
+		l += p.field6Length()
+		l += p.field7Length()
+		l += p.field8Length()
+		l += p.field9Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -302,6 +450,34 @@ func (p *CompletedComment) fastWriteField5(buf []byte, w thrift.NocopyWriter) in
 	return offset
 }
 
+func (p *CompletedComment) fastWriteField6(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 6)
+	offset += thrift.Binary.WriteI64(buf[offset:], p.LikeCount)
+	return offset
+}
+
+func (p *CompletedComment) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 7)
+	offset += thrift.Binary.WriteI64(buf[offset:], p.CommentCount)
+	return offset
+}
+
+func (p *CompletedComment) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 8)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.CreateTime)
+	return offset
+}
+
+func (p *CompletedComment) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 9)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.UpdateTime)
+	return offset
+}
+
 func (p *CompletedComment) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
@@ -334,6 +510,34 @@ func (p *CompletedComment) field5Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += thrift.Binary.StringLengthNocopy(p.Content)
+	return l
+}
+
+func (p *CompletedComment) field6Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.I64Length()
+	return l
+}
+
+func (p *CompletedComment) field7Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.I64Length()
+	return l
+}
+
+func (p *CompletedComment) field8Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.StringLengthNocopy(p.CreateTime)
+	return l
+}
+
+func (p *CompletedComment) field9Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.StringLengthNocopy(p.UpdateTime)
 	return l
 }
 
@@ -701,7 +905,7 @@ func (p *CreateCommentResponse) field1Length() int {
 	return l
 }
 
-func (p *GetCommentResponse) FastRead(buf []byte) (int, error) {
+func (p *GetCommentRequest) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -751,14 +955,14 @@ func (p *GetCommentResponse) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_GetCommentResponse[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_GetCommentRequest[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 RequiredFieldNotSetError:
-	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_GetCommentResponse[fieldId]))
+	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_GetCommentRequest[fieldId]))
 }
 
-func (p *GetCommentResponse) FastReadField1(buf []byte) (int, error) {
+func (p *GetCommentRequest) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
 	var _field string
@@ -772,11 +976,11 @@ func (p *GetCommentResponse) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *GetCommentResponse) FastWrite(buf []byte) int {
+func (p *GetCommentRequest) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *GetCommentResponse) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *GetCommentRequest) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
@@ -785,7 +989,7 @@ func (p *GetCommentResponse) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) 
 	return offset
 }
 
-func (p *GetCommentResponse) BLength() int {
+func (p *GetCommentRequest) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
@@ -794,21 +998,21 @@ func (p *GetCommentResponse) BLength() int {
 	return l
 }
 
-func (p *GetCommentResponse) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+func (p *GetCommentRequest) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
 	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.ID)
 	return offset
 }
 
-func (p *GetCommentResponse) field1Length() int {
+func (p *GetCommentRequest) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += thrift.Binary.StringLengthNocopy(p.ID)
 	return l
 }
 
-func (p *UpdateCommonResponse) FastRead(buf []byte) (int, error) {
+func (p *UpdateCommonRequest) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -816,6 +1020,7 @@ func (p *UpdateCommonResponse) FastRead(buf []byte) (int, error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetID bool = false
+	var issetContent bool = false
 	for {
 		fieldTypeId, fieldId, l, err = thrift.Binary.ReadFieldBegin(buf[offset:])
 		offset += l
@@ -848,6 +1053,7 @@ func (p *UpdateCommonResponse) FastRead(buf []byte) (int, error) {
 				if err != nil {
 					goto ReadFieldError
 				}
+				issetContent = true
 			} else {
 				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 				offset += l
@@ -868,18 +1074,23 @@ func (p *UpdateCommonResponse) FastRead(buf []byte) (int, error) {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
+
+	if !issetContent {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
 	return offset, nil
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UpdateCommonResponse[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UpdateCommonRequest[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 RequiredFieldNotSetError:
-	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_UpdateCommonResponse[fieldId]))
+	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_UpdateCommonRequest[fieldId]))
 }
 
-func (p *UpdateCommonResponse) FastReadField1(buf []byte) (int, error) {
+func (p *UpdateCommonRequest) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
 	var _field string
@@ -893,25 +1104,25 @@ func (p *UpdateCommonResponse) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *UpdateCommonResponse) FastReadField2(buf []byte) (int, error) {
+func (p *UpdateCommonRequest) FastReadField2(buf []byte) (int, error) {
 	offset := 0
 
-	var _field *string
+	var _field string
 	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
-		_field = &v
+		_field = v
 	}
 	p.Content = _field
 	return offset, nil
 }
 
-func (p *UpdateCommonResponse) FastWrite(buf []byte) int {
+func (p *UpdateCommonRequest) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *UpdateCommonResponse) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *UpdateCommonRequest) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
@@ -921,7 +1132,7 @@ func (p *UpdateCommonResponse) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 	return offset
 }
 
-func (p *UpdateCommonResponse) BLength() int {
+func (p *UpdateCommonRequest) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
@@ -931,39 +1142,35 @@ func (p *UpdateCommonResponse) BLength() int {
 	return l
 }
 
-func (p *UpdateCommonResponse) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+func (p *UpdateCommonRequest) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
 	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.ID)
 	return offset
 }
 
-func (p *UpdateCommonResponse) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
+func (p *UpdateCommonRequest) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetContent() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Content)
-	}
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Content)
 	return offset
 }
 
-func (p *UpdateCommonResponse) field1Length() int {
+func (p *UpdateCommonRequest) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += thrift.Binary.StringLengthNocopy(p.ID)
 	return l
 }
 
-func (p *UpdateCommonResponse) field2Length() int {
+func (p *UpdateCommonRequest) field2Length() int {
 	l := 0
-	if p.IsSetContent() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Content)
-	}
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.StringLengthNocopy(p.Content)
 	return l
 }
 
-func (p *DeleteCommonResponse) FastRead(buf []byte) (int, error) {
+func (p *DeleteCommonRequest) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -1013,14 +1220,14 @@ func (p *DeleteCommonResponse) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_DeleteCommonResponse[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_DeleteCommonRequest[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 RequiredFieldNotSetError:
-	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_DeleteCommonResponse[fieldId]))
+	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_DeleteCommonRequest[fieldId]))
 }
 
-func (p *DeleteCommonResponse) FastReadField1(buf []byte) (int, error) {
+func (p *DeleteCommonRequest) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
 	var _field string
@@ -1034,11 +1241,11 @@ func (p *DeleteCommonResponse) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *DeleteCommonResponse) FastWrite(buf []byte) int {
+func (p *DeleteCommonRequest) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *DeleteCommonResponse) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *DeleteCommonRequest) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
@@ -1047,7 +1254,7 @@ func (p *DeleteCommonResponse) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 	return offset
 }
 
-func (p *DeleteCommonResponse) BLength() int {
+func (p *DeleteCommonRequest) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
@@ -1056,14 +1263,14 @@ func (p *DeleteCommonResponse) BLength() int {
 	return l
 }
 
-func (p *DeleteCommonResponse) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+func (p *DeleteCommonRequest) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
 	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.ID)
 	return offset
 }
 
-func (p *DeleteCommonResponse) field1Length() int {
+func (p *DeleteCommonRequest) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += thrift.Binary.StringLengthNocopy(p.ID)
@@ -1319,7 +1526,7 @@ SkipFieldError:
 
 func (p *CommentServiceGetCommentArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewGetCommentResponse()
+	_field := NewGetCommentRequest()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -1517,7 +1724,7 @@ SkipFieldError:
 
 func (p *CommentServiceUpdateCommentArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewUpdateCommonResponse()
+	_field := NewUpdateCommonRequest()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -1715,7 +1922,7 @@ SkipFieldError:
 
 func (p *CommentServiceDeleteCommentArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewDeleteCommonResponse()
+	_field := NewDeleteCommonRequest()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

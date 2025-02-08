@@ -13,9 +13,9 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	CreateComment(ctx context.Context, req *comment.CreateCommentRequest, callOptions ...callopt.Option) (r *comment.CreateCommentResponse, err error)
-	GetComment(ctx context.Context, req *comment.GetCommentResponse, callOptions ...callopt.Option) (r *comment.CompletedComment, err error)
-	UpdateComment(ctx context.Context, req *comment.UpdateCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
-	DeleteComment(ctx context.Context, req *comment.DeleteCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
+	GetComment(ctx context.Context, req *comment.GetCommentRequest, callOptions ...callopt.Option) (r *comment.CompletedComment, err error)
+	UpdateComment(ctx context.Context, req *comment.UpdateCommonRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
+	DeleteComment(ctx context.Context, req *comment.DeleteCommonRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -52,17 +52,17 @@ func (p *kCommentServiceClient) CreateComment(ctx context.Context, req *comment.
 	return p.kClient.CreateComment(ctx, req)
 }
 
-func (p *kCommentServiceClient) GetComment(ctx context.Context, req *comment.GetCommentResponse, callOptions ...callopt.Option) (r *comment.CompletedComment, err error) {
+func (p *kCommentServiceClient) GetComment(ctx context.Context, req *comment.GetCommentRequest, callOptions ...callopt.Option) (r *comment.CompletedComment, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetComment(ctx, req)
 }
 
-func (p *kCommentServiceClient) UpdateComment(ctx context.Context, req *comment.UpdateCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
+func (p *kCommentServiceClient) UpdateComment(ctx context.Context, req *comment.UpdateCommonRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateComment(ctx, req)
 }
 
-func (p *kCommentServiceClient) DeleteComment(ctx context.Context, req *comment.DeleteCommonResponse, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
+func (p *kCommentServiceClient) DeleteComment(ctx context.Context, req *comment.DeleteCommonRequest, callOptions ...callopt.Option) (r *base.EmptyBody, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteComment(ctx, req)
 }

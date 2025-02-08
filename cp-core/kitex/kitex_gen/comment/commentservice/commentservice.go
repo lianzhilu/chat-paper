@@ -200,7 +200,7 @@ func (p *kClient) CreateComment(ctx context.Context, req *comment.CreateCommentR
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetComment(ctx context.Context, req *comment.GetCommentResponse) (r *comment.CompletedComment, err error) {
+func (p *kClient) GetComment(ctx context.Context, req *comment.GetCommentRequest) (r *comment.CompletedComment, err error) {
 	var _args comment.CommentServiceGetCommentArgs
 	_args.Req = req
 	var _result comment.CommentServiceGetCommentResult
@@ -210,7 +210,7 @@ func (p *kClient) GetComment(ctx context.Context, req *comment.GetCommentRespons
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateComment(ctx context.Context, req *comment.UpdateCommonResponse) (r *base.EmptyBody, err error) {
+func (p *kClient) UpdateComment(ctx context.Context, req *comment.UpdateCommonRequest) (r *base.EmptyBody, err error) {
 	var _args comment.CommentServiceUpdateCommentArgs
 	_args.Req = req
 	var _result comment.CommentServiceUpdateCommentResult
@@ -220,7 +220,7 @@ func (p *kClient) UpdateComment(ctx context.Context, req *comment.UpdateCommonRe
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteComment(ctx context.Context, req *comment.DeleteCommonResponse) (r *base.EmptyBody, err error) {
+func (p *kClient) DeleteComment(ctx context.Context, req *comment.DeleteCommonRequest) (r *base.EmptyBody, err error) {
 	var _args comment.CommentServiceDeleteCommentArgs
 	_args.Req = req
 	var _result comment.CommentServiceDeleteCommentResult

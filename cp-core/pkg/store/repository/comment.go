@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/comment"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/dal"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/model"
 	"gorm.io/gorm"
@@ -22,9 +21,14 @@ type UpdateCommentParams struct {
 	Content string
 }
 
+type CompletedCommentModel struct {
+	CommentMeta    model.Comment
+	CommentContent string
+}
+
 type CommentRepository interface {
 	CreateComment(ctx context.Context, param CreateCommentParams) error
-	GetComment(ctx context.Context, id string) (*comment.CompletedComment, error)
+	GetComment(ctx context.Context, id string) (*CompletedCommentModel, error)
 	UpdateComment(ctx context.Context, param UpdateCommentParams) error
 	DeleteComment(ctx context.Context, id string) error
 }
@@ -77,11 +81,11 @@ func (r *MySQLCommentRepository) CreateComment(ctx context.Context, param Create
 	return nil
 }
 
-func (r *MySQLCommentRepository) GetComment(ctx context.Context, id string) (*comment.CompletedComment, error) {
+func (r *MySQLCommentRepository) GetComment(ctx context.Context, id string) (*CompletedCommentModel, error) {
 	tCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	var completedComment *comment.CompletedComment
+	var completedComment *CompletedCommentModel
 
 	commentOrm := dal.Comment
 	commentContentOrm := dal.CommentContent
@@ -95,12 +99,9 @@ func (r *MySQLCommentRepository) GetComment(ctx context.Context, id string) (*co
 		if err != nil {
 			return err
 		}
-		completedComment = &comment.CompletedComment{
-			ID:        commentMeta.SID,
-			AuthorID:  commentMeta.AuthorID,
-			ArticleID: commentMeta.ArticleID,
-			ParentID:  commentMeta.ParentID,
-			Content:   commentContent.Content,
+		completedComment = &CompletedCommentModel{
+			CommentMeta:    *commentMeta,
+			CommentContent: commentContent.Content,
 		}
 		return nil
 	})
