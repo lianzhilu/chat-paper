@@ -13,4 +13,5 @@ var (
 func init() {
 	InitUserClient()
 	InitArticleClient()
+	InitCommentClient()
 }
