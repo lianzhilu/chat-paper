@@ -29,7 +29,7 @@ func main() {
 	commentService := service.NewCommentService(commentRepo)
 	svc := commentservice.NewServer(
 		commentService,
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "user"}),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "comment"}),
 		server.WithServiceAddr(addr),
 		server.WithRegistry(r),
 	)
