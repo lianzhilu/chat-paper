@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/base"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/comment"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/constants"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/generator"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/store/repository"
 )
@@ -17,7 +18,7 @@ func NewCommentService(commentRepo repository.CommentRepository) *CommentService
 }
 
 func (impl *CommentServiceImpl) CreateComment(ctx context.Context, req *comment.CreateCommentRequest) (resp *comment.CreateCommentResponse, err error) {
-	id, err := generator.GenerateSID("cmt")
+	id, err := generator.GenerateSID(constants.CommentPrefix)
 	if err != nil {
 		return nil, err
 	}

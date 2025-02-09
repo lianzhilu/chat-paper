@@ -2,6 +2,7 @@ package constants
 
 const (
 	ArticlePrefix = "art"
+	CommentPrefix = "cmt"
 )
 
 const (
