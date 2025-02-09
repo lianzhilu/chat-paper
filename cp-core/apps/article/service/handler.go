@@ -52,18 +52,7 @@ func (impl *ArticleServiceImpl) GetArticle(ctx context.Context, req *article.Get
 		}
 		return nil, err
 	}
-	resp = &article.Article{
-		ID:           art.SID,
-		AuthorID:     art.AuthorID,
-		Title:        art.Title,
-		Content:      art.Content,
-		Status:       art.Status,
-		ViewCount:    int64(art.ViewCount),
-		LikeCount:    int64(art.LikeCount),
-		CommentCount: int64(art.CommentCount),
-		CreateTime:   art.CreateTime.Format("2006-01-02 15:04:05"),
-		UpdateTime:   art.UpdateTime.Format("2006-01-02 15:04:05"),
-	}
+	resp = convertArticleDo2GetArticleResponse(art)
 	return resp, nil
 }
 

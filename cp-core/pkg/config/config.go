@@ -43,12 +43,18 @@ type ArticleServiceConfig struct {
 	ArticleServicePort string `mapstructure:"CP_ARTICLE_SERVICE_PORT"`
 }
 
+type CommentServiceConfig struct {
+	CommentServiceHost string `mapstructure:"CP_COMMENT_SERVICE_HOST"`
+	CommentServicePort string `mapstructure:"CP_COMMENT_SERVICE_PORT"`
+}
+
 type CPRuntimeConfig struct {
 	MySQLConfig          MySQLConfig          `mapstructure:"CP_MYSQL_CONFIG"`
 	EtcdConfig           EtcdConfig           `mapstructure:"CP_ETCD_CONFIG"`
 	GatewayConfig        GatewayConfig        `mapstructure:"CP_GATEWAY_CONFIG"`
 	UserServiceConfig    UserServiceConfig    `mapstructure:"CP_USER_SERVICE_CONFIG"`
 	ArticleServiceConfig ArticleServiceConfig `mapstructure:"CP_ARTICLE_SERVICE_CONFIG"`
+	CommentServiceConfig CommentServiceConfig `mapstructure:"CP_COMMENT_SERVICE_CONFIG"`
 }
 
 func getEnv(key, defaultValue string) string {
