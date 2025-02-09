@@ -28,6 +28,13 @@ func registerGroup(hz *server.Hertz) {
 			article.DELETE("/", handler.DeleteArticle)
 			article.GET("/list", handler.ListArticles)
 		}
+		comment := chatpaper.Group("/comment")
+		{
+			comment.POST("/", handler.CreateComment)
+			comment.GET("/", handler.GetComment)
+			comment.PUT("/", handler.UpdateComment)
+			comment.DELETE("/", handler.DeleteComment)
+		}
 	}
 }
 
