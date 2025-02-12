@@ -6,10 +6,12 @@ const (
 )
 
 const (
-	SortOrderAsc  = "Asc"
-	SortOrderDesc = "Desc"
+	SortOrderAsc               = "Asc"
+	SortOrderDesc              = "Desc"
+	SortOrderCommentCreateTime = "CreateTime"
+	SortOrderCommentLikeCount  = "LikeCount"
 )
 
 const (
-	RedisKeyCommentIndex = "CP:COMMENT:%s:ORDER_INDEX" // "cp:service_name:article_id:order_index"
+	RedisKeyCommentIndex = "CP:COMMENT:%s:%s" // "cp:service_name:article_id:order_index"
 )
