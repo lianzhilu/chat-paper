@@ -5,6 +5,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/lianzhilu/chat-paper/cp-core/apps/gateway/rpc"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/article"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/cperror"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/response"
 	"net/http"
 )
