@@ -18,7 +18,7 @@ func NewCommentService(commentRepo repository.CommentRepository) *CommentService
 }
 
 func (impl *CommentServiceImpl) CreateComment(ctx context.Context, req *comment.CreateCommentRequest) (resp *comment.CreateCommentResponse, err error) {
-	id, err := generator.GenerateSID(constants.CommentPrefix)
+	id, err := generator.GenerateSID(constants.SIDPrefixComment)
 	if err != nil {
 		return nil, err
 	}

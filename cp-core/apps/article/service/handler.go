@@ -23,7 +23,7 @@ func NewArticleServiceImpl(articleRepo repository.ArticleRepository) *ArticleSer
 }
 
 func (impl *ArticleServiceImpl) CreateArticle(ctx context.Context, req *article.CreateArticleRequest) (resp *article.CreateArticleResponse, err error) {
-	id, err := generator.GenerateSID(constants.ArticlePrefix)
+	id, err := generator.GenerateSID(constants.SIDPrefixArticle)
 	if err != nil {
 		return nil, err
 	}
