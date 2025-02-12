@@ -6,10 +6,10 @@ const (
 )
 
 const (
-	SortOrderAsc               = "Asc"
-	SortOrderDesc              = "Desc"
-	SortOrderCommentCreateTime = "CreateTime"
-	SortOrderCommentLikeCount  = "LikeCount"
+	SortOrderAsc            = "Asc"
+	SortOrderDesc           = "Desc"
+	SortByCommentCreateTime = "CreateTime"
+	SortByCommentLikeCount  = "LikeCount"
 )
 
 const (

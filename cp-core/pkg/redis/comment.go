@@ -22,6 +22,11 @@ type CommentCache struct {
 	CreateTime   string
 }
 
+type RangeOption struct {
+	SortOrder string
+	SortBy    string
+}
+
 func convertOrderValue2Score(scoreVal reflect.Value) (score float64, err error) {
 	switch scoreVal.Kind() {
 	case reflect.String:
@@ -32,28 +37,15 @@ func convertOrderValue2Score(scoreVal reflect.Value) (score float64, err error) 
 	case reflect.Float64:
 		score = scoreVal.Float()
 	case reflect.Int:
-		score = float64(int64(scoreVal.Int()))
+		score = float64(scoreVal.Int())
 	default:
 		return 0.0, fmt.Errorf("unsupported type %s", scoreVal.Kind().String())
 	}
 	return score, nil
 }
 
-func AddComment(ctx context.Context, rdb *RedisClient, cc *CommentCache) error {
-
-	err := ZAddComment(ctx, rdb, cc, constants.SortOrderCommentCreateTime)
-	if err != nil {
-		return err
-	}
-
-	err = ZAddComment(ctx, rdb, cc, constants.SortOrderCommentLikeCount)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func ZAddComment(ctx context.Context, rdb *RedisClient, cc *CommentCache, order string) error {
+// ZAddComment add single comment into an exist zset
+func (rdb *RedisClient) ZAddComment(ctx context.Context, cc *CommentCache, order string) error {
 	key := fmt.Sprintf(constants.RedisKeyCommentIndex, cc.ArticleID, strings.ToUpper(order))
 	existFlag, err := rdb.Expire(ctx, key, 60).Result()
 	if err != nil {
@@ -87,6 +79,11 @@ func ZAddComment(ctx context.Context, rdb *RedisClient, cc *CommentCache, order 
 	return nil
 }
 
-//func ZAddComments(ctx context.Context, rdb *RedisClient) error {
+// ZAddComments add comments of article into a new zset
+//func ZAddComments(ctx context.Context, rdb *RedisClient, ccs []*CommentCache) error {
 //
 //}
+
+func (rdb *RedisClient) ZRangeComments(ctx context.Context, articleID string) ([]*CommentCache, error) {
+	return nil, nil
+}
