@@ -34,7 +34,7 @@ func (p *CompletedComment) FastRead(buf []byte) (int, error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetID bool = false
-	var issetAuthorID bool = false
+	var issetUserID bool = false
 	var issetArticleID bool = false
 	var issetParentID bool = false
 	var issetContent bool = false
@@ -74,7 +74,7 @@ func (p *CompletedComment) FastRead(buf []byte) (int, error) {
 				if err != nil {
 					goto ReadFieldError
 				}
-				issetAuthorID = true
+				issetUserID = true
 			} else {
 				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 				offset += l
@@ -201,7 +201,7 @@ func (p *CompletedComment) FastRead(buf []byte) (int, error) {
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetAuthorID {
+	if !issetUserID {
 		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
@@ -275,7 +275,7 @@ func (p *CompletedComment) FastReadField2(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.AuthorID = _field
+	p.UserID = _field
 	return offset, nil
 }
 
@@ -425,7 +425,7 @@ func (p *CompletedComment) fastWriteField1(buf []byte, w thrift.NocopyWriter) in
 func (p *CompletedComment) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
-	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.AuthorID)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.UserID)
 	return offset
 }
 
@@ -488,7 +488,7 @@ func (p *CompletedComment) field1Length() int {
 func (p *CompletedComment) field2Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
-	l += thrift.Binary.StringLengthNocopy(p.AuthorID)
+	l += thrift.Binary.StringLengthNocopy(p.UserID)
 	return l
 }
 
@@ -548,7 +548,7 @@ func (p *CreateCommentRequest) FastRead(buf []byte) (int, error) {
 	var l int
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetAuthorID bool = false
+	var issetUserID bool = false
 	var issetArticleID bool = false
 	var issetContent bool = false
 	for {
@@ -568,7 +568,7 @@ func (p *CreateCommentRequest) FastRead(buf []byte) (int, error) {
 				if err != nil {
 					goto ReadFieldError
 				}
-				issetAuthorID = true
+				issetUserID = true
 			} else {
 				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 				offset += l
@@ -629,7 +629,7 @@ func (p *CreateCommentRequest) FastRead(buf []byte) (int, error) {
 		}
 	}
 
-	if !issetAuthorID {
+	if !issetUserID {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -664,7 +664,7 @@ func (p *CreateCommentRequest) FastReadField1(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.AuthorID = _field
+	p.UserID = _field
 	return offset, nil
 }
 
@@ -741,7 +741,7 @@ func (p *CreateCommentRequest) BLength() int {
 func (p *CreateCommentRequest) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
-	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.AuthorID)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.UserID)
 	return offset
 }
 
@@ -771,7 +771,7 @@ func (p *CreateCommentRequest) fastWriteField4(buf []byte, w thrift.NocopyWriter
 func (p *CreateCommentRequest) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
-	l += thrift.Binary.StringLengthNocopy(p.AuthorID)
+	l += thrift.Binary.StringLengthNocopy(p.UserID)
 	return l
 }
 

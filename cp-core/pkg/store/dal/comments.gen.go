@@ -29,7 +29,7 @@ func newComment(db *gorm.DB, opts ...gen.DOOption) comment {
 	_comment.ALL = field.NewAsterisk(tableName)
 	_comment.ID = field.NewUint64(tableName, "id")
 	_comment.SID = field.NewString(tableName, "sid")
-	_comment.AuthorID = field.NewString(tableName, "author_id")
+	_comment.UserID = field.NewString(tableName, "user_id")
 	_comment.ArticleID = field.NewString(tableName, "article_id")
 	_comment.ParentID = field.NewString(tableName, "parent_id")
 	_comment.LikeCount = field.NewInt64(tableName, "like_count")
@@ -49,7 +49,7 @@ type comment struct {
 	ALL          field.Asterisk
 	ID           field.Uint64
 	SID          field.String
-	AuthorID     field.String
+	UserID       field.String
 	ArticleID    field.String
 	ParentID     field.String
 	LikeCount    field.Int64
@@ -75,7 +75,7 @@ func (c *comment) updateTableName(table string) *comment {
 	c.ALL = field.NewAsterisk(table)
 	c.ID = field.NewUint64(table, "id")
 	c.SID = field.NewString(table, "sid")
-	c.AuthorID = field.NewString(table, "author_id")
+	c.UserID = field.NewString(table, "user_id")
 	c.ArticleID = field.NewString(table, "article_id")
 	c.ParentID = field.NewString(table, "parent_id")
 	c.LikeCount = field.NewInt64(table, "like_count")
@@ -110,7 +110,7 @@ func (c *comment) fillFieldMap() {
 	c.fieldMap = make(map[string]field.Expr, 10)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["sid"] = c.SID
-	c.fieldMap["author_id"] = c.AuthorID
+	c.fieldMap["user_id"] = c.UserID
 	c.fieldMap["article_id"] = c.ArticleID
 	c.fieldMap["parent_id"] = c.ParentID
 	c.fieldMap["like_count"] = c.LikeCount

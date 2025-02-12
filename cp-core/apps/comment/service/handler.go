@@ -24,7 +24,7 @@ func (impl *CommentServiceImpl) CreateComment(ctx context.Context, req *comment.
 	}
 	param := repository.CreateCommentParams{
 		ID:        id,
-		AuthorID:  req.AuthorID,
+		UserID:    req.UserID,
 		ArticleID: req.ArticleID,
 		ParentID:  req.ParentID,
 		Content:   req.Content,
