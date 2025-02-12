@@ -84,6 +84,7 @@ func (rdb *RedisClient) ZAddComment(ctx context.Context, cc *CommentCache, order
 //
 //}
 
+// ZRangeComments get comments of article from zset
 func (rdb *RedisClient) ZRangeComments(ctx context.Context, articleID string) ([]*CommentCache, error) {
 	return nil, nil
 }
