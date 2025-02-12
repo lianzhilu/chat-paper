@@ -6,7 +6,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/lianzhilu/chat-paper/cp-core/apps/gateway/rpc"
 	"github.com/lianzhilu/chat-paper/cp-core/kitex/kitex_gen/user"
-	"github.com/lianzhilu/chat-paper/cp-core/pkg/errmsg"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/cperror"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/response"
 	"net/http"
 	"strings"
@@ -49,16 +49,16 @@ func validateForRegister(name, password string) error {
 func Register(ctx context.Context, c *app.RequestContext) {
 	var body user.RegisterRequest
 	if err := c.Bind(&body); err != nil {
-		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(cperror.ErrInvalidParameter, err.Error()))
 		return
 	}
 
 	if err := validateName(body.Name); err != nil {
-		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(cperror.ErrInvalidParameter, err.Error()))
 		return
 	}
 	if err := validatePassword(body.Password); err != nil {
-		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(cperror.ErrInvalidParameter, err.Error()))
 		return
 	}
 
@@ -68,7 +68,7 @@ func Register(ctx context.Context, c *app.RequestContext) {
 	}
 	resp, err := rpc.Register(ctx, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		c.JSON(http.StatusInternalServerError, response.ConstructErrorResponse(cperror.ErrInvalidParameter, err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, response.ConstructSuccessResponse(resp))
@@ -77,7 +77,7 @@ func Register(ctx context.Context, c *app.RequestContext) {
 func Login(ctx context.Context, c *app.RequestContext) {
 	var body user.LoginRequest
 	if err := c.Bind(&body); err != nil {
-		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		c.JSON(http.StatusBadRequest, response.ConstructErrorResponse(cperror.ErrInvalidParameter, err.Error()))
 		return
 	}
 
@@ -87,7 +87,7 @@ func Login(ctx context.Context, c *app.RequestContext) {
 	}
 	resp, err := rpc.Login(ctx, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, response.ConstructErrorResponse(errmsg.ErrInvalidParameter, err.Error()))
+		c.JSON(http.StatusInternalServerError, response.ConstructErrorResponse(cperror.ErrInvalidParameter, err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, response.ConstructSuccessResponse(resp))

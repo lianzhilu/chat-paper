@@ -1,4 +1,4 @@
-package errmsg
+package cperror
 
 const (
 	ErrInvalidParameter = "InvalidParameter"

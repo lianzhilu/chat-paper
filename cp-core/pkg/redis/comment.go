@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/lianzhilu/chat-paper/cp-core/pkg/constants"
+	"github.com/lianzhilu/chat-paper/cp-core/pkg/cperror"
 	"github.com/redis/go-redis/v9"
 	"reflect"
 	"strconv"
@@ -75,13 +76,17 @@ func ZAddComment(ctx context.Context, rdb *RedisClient, cc *CommentCache, order 
 		return err
 	}
 
-	if existFlag {
+	if !existFlag {
+		return cperror.ErrKeyNotExistsRedis
+	} else {
 		rdb.ZAdd(ctx, key, redis.Z{
 			Score:  score,
 			Member: member,
 		})
-	} else {
-		// ...
 	}
 	return nil
 }
+
+//func ZAddComments(ctx context.Context, rdb *RedisClient) error {
+//
+//}
