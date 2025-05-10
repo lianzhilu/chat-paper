@@ -10,7 +10,7 @@ import (
 
 type CreateCommentParams struct {
 	ID        string
-	AuthorID  string
+	UserID    string
 	ArticleID string
 	ParentID  *string
 	Content   string
@@ -51,7 +51,7 @@ func (r *MySQLCommentRepository) CreateComment(ctx context.Context, param Create
 		// 1. create comment meta
 		commentMeta := &model.Comment{
 			SID:       param.ID,
-			AuthorID:  param.AuthorID,
+			UserID:    param.UserID,
 			ArticleID: param.ArticleID,
 			ParentID:  "0",
 		}

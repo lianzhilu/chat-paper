@@ -23,6 +23,12 @@ type MySQLConfig struct {
 	MySQLPort     string `mapstructure:"CP_MYSQL_PORT"`
 }
 
+type RedisConfig struct {
+	RedisHost     string `mapstructure:"CP_REDIS_HOST"`
+	RedisPort     string `mapstructure:"CP_REDIS_PORT"`
+	RedisPassword string `mapstructure:"CP_REDIS_PASSWORD"`
+}
+
 type EtcdConfig struct {
 	EtcdHost string `mapstructure:"CP_ETCD_HOST"`
 	EtcdPort string `mapstructure:"CP_ETCD_PORT"`
@@ -50,6 +56,7 @@ type CommentServiceConfig struct {
 
 type CPRuntimeConfig struct {
 	MySQLConfig          MySQLConfig          `mapstructure:"CP_MYSQL_CONFIG"`
+	RedisConfig          RedisConfig          `mapstructure:"CP_REDIS_CONFIG"`
 	EtcdConfig           EtcdConfig           `mapstructure:"CP_ETCD_CONFIG"`
 	GatewayConfig        GatewayConfig        `mapstructure:"CP_GATEWAY_CONFIG"`
 	UserServiceConfig    UserServiceConfig    `mapstructure:"CP_USER_SERVICE_CONFIG"`

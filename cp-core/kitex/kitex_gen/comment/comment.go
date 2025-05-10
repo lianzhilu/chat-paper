@@ -12,7 +12,7 @@ import (
 
 type CompletedComment struct {
 	ID           string `thrift:"ID,1,required" frugal:"1,required,string" json:"ID"`
-	AuthorID     string `thrift:"AuthorID,2,required" frugal:"2,required,string" json:"AuthorID"`
+	UserID       string `thrift:"UserID,2,required" frugal:"2,required,string" json:"UserID"`
 	ArticleID    string `thrift:"ArticleID,3,required" frugal:"3,required,string" json:"ArticleID"`
 	ParentID     string `thrift:"ParentID,4,required" frugal:"4,required,string" json:"ParentID"`
 	Content      string `thrift:"Content,5,required" frugal:"5,required,string" json:"Content"`
@@ -33,8 +33,8 @@ func (p *CompletedComment) GetID() (v string) {
 	return p.ID
 }
 
-func (p *CompletedComment) GetAuthorID() (v string) {
-	return p.AuthorID
+func (p *CompletedComment) GetUserID() (v string) {
+	return p.UserID
 }
 
 func (p *CompletedComment) GetArticleID() (v string) {
@@ -67,8 +67,8 @@ func (p *CompletedComment) GetUpdateTime() (v string) {
 func (p *CompletedComment) SetID(val string) {
 	p.ID = val
 }
-func (p *CompletedComment) SetAuthorID(val string) {
-	p.AuthorID = val
+func (p *CompletedComment) SetUserID(val string) {
+	p.UserID = val
 }
 func (p *CompletedComment) SetArticleID(val string) {
 	p.ArticleID = val
@@ -94,7 +94,7 @@ func (p *CompletedComment) SetUpdateTime(val string) {
 
 var fieldIDToName_CompletedComment = map[int16]string{
 	1: "ID",
-	2: "AuthorID",
+	2: "UserID",
 	3: "ArticleID",
 	4: "ParentID",
 	5: "Content",
@@ -109,7 +109,7 @@ func (p *CompletedComment) Read(iprot thrift.TProtocol) (err error) {
 	var fieldTypeId thrift.TType
 	var fieldId int16
 	var issetID bool = false
-	var issetAuthorID bool = false
+	var issetUserID bool = false
 	var issetArticleID bool = false
 	var issetParentID bool = false
 	var issetContent bool = false
@@ -146,7 +146,7 @@ func (p *CompletedComment) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetAuthorID = true
+				issetUserID = true
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
@@ -231,7 +231,7 @@ func (p *CompletedComment) Read(iprot thrift.TProtocol) (err error) {
 		goto RequiredFieldNotSetError
 	}
 
-	if !issetAuthorID {
+	if !issetUserID {
 		fieldId = 2
 		goto RequiredFieldNotSetError
 	}
@@ -307,7 +307,7 @@ func (p *CompletedComment) ReadField2(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.AuthorID = _field
+	p.UserID = _field
 	return nil
 }
 func (p *CompletedComment) ReadField3(iprot thrift.TProtocol) error {
@@ -467,10 +467,10 @@ WriteFieldEndError:
 }
 
 func (p *CompletedComment) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("AuthorID", thrift.STRING, 2); err != nil {
+	if err = oprot.WriteFieldBegin("UserID", thrift.STRING, 2); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.AuthorID); err != nil {
+	if err := oprot.WriteString(p.UserID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -619,7 +619,7 @@ func (p *CompletedComment) DeepEqual(ano *CompletedComment) bool {
 	if !p.Field1DeepEqual(ano.ID) {
 		return false
 	}
-	if !p.Field2DeepEqual(ano.AuthorID) {
+	if !p.Field2DeepEqual(ano.UserID) {
 		return false
 	}
 	if !p.Field3DeepEqual(ano.ArticleID) {
@@ -655,7 +655,7 @@ func (p *CompletedComment) Field1DeepEqual(src string) bool {
 }
 func (p *CompletedComment) Field2DeepEqual(src string) bool {
 
-	if strings.Compare(p.AuthorID, src) != 0 {
+	if strings.Compare(p.UserID, src) != 0 {
 		return false
 	}
 	return true
@@ -711,7 +711,7 @@ func (p *CompletedComment) Field9DeepEqual(src string) bool {
 }
 
 type CreateCommentRequest struct {
-	AuthorID  string  `thrift:"AuthorID,1,required" frugal:"1,required,string" json:"AuthorID"`
+	UserID    string  `thrift:"UserID,1,required" frugal:"1,required,string" json:"UserID"`
 	ArticleID string  `thrift:"ArticleID,2,required" frugal:"2,required,string" json:"ArticleID"`
 	ParentID  *string `thrift:"ParentID,3,optional" frugal:"3,optional,string" json:"ParentID,omitempty"`
 	Content   string  `thrift:"Content,4,required" frugal:"4,required,string" json:"Content"`
@@ -724,8 +724,8 @@ func NewCreateCommentRequest() *CreateCommentRequest {
 func (p *CreateCommentRequest) InitDefault() {
 }
 
-func (p *CreateCommentRequest) GetAuthorID() (v string) {
-	return p.AuthorID
+func (p *CreateCommentRequest) GetUserID() (v string) {
+	return p.UserID
 }
 
 func (p *CreateCommentRequest) GetArticleID() (v string) {
@@ -744,8 +744,8 @@ func (p *CreateCommentRequest) GetParentID() (v string) {
 func (p *CreateCommentRequest) GetContent() (v string) {
 	return p.Content
 }
-func (p *CreateCommentRequest) SetAuthorID(val string) {
-	p.AuthorID = val
+func (p *CreateCommentRequest) SetUserID(val string) {
+	p.UserID = val
 }
 func (p *CreateCommentRequest) SetArticleID(val string) {
 	p.ArticleID = val
@@ -758,7 +758,7 @@ func (p *CreateCommentRequest) SetContent(val string) {
 }
 
 var fieldIDToName_CreateCommentRequest = map[int16]string{
-	1: "AuthorID",
+	1: "UserID",
 	2: "ArticleID",
 	3: "ParentID",
 	4: "Content",
@@ -772,7 +772,7 @@ func (p *CreateCommentRequest) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
-	var issetAuthorID bool = false
+	var issetUserID bool = false
 	var issetArticleID bool = false
 	var issetContent bool = false
 
@@ -795,7 +795,7 @@ func (p *CreateCommentRequest) Read(iprot thrift.TProtocol) (err error) {
 				if err = p.ReadField1(iprot); err != nil {
 					goto ReadFieldError
 				}
-				issetAuthorID = true
+				issetUserID = true
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
@@ -838,7 +838,7 @@ func (p *CreateCommentRequest) Read(iprot thrift.TProtocol) (err error) {
 		goto ReadStructEndError
 	}
 
-	if !issetAuthorID {
+	if !issetUserID {
 		fieldId = 1
 		goto RequiredFieldNotSetError
 	}
@@ -878,7 +878,7 @@ func (p *CreateCommentRequest) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.AuthorID = _field
+	p.UserID = _field
 	return nil
 }
 func (p *CreateCommentRequest) ReadField2(iprot thrift.TProtocol) error {
@@ -957,10 +957,10 @@ WriteStructEndError:
 }
 
 func (p *CreateCommentRequest) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("AuthorID", thrift.STRING, 1); err != nil {
+	if err = oprot.WriteFieldBegin("UserID", thrift.STRING, 1); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.AuthorID); err != nil {
+	if err := oprot.WriteString(p.UserID); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -1040,7 +1040,7 @@ func (p *CreateCommentRequest) DeepEqual(ano *CreateCommentRequest) bool {
 	} else if p == nil || ano == nil {
 		return false
 	}
-	if !p.Field1DeepEqual(ano.AuthorID) {
+	if !p.Field1DeepEqual(ano.UserID) {
 		return false
 	}
 	if !p.Field2DeepEqual(ano.ArticleID) {
@@ -1057,7 +1057,7 @@ func (p *CreateCommentRequest) DeepEqual(ano *CreateCommentRequest) bool {
 
 func (p *CreateCommentRequest) Field1DeepEqual(src string) bool {
 
-	if strings.Compare(p.AuthorID, src) != 0 {
+	if strings.Compare(p.UserID, src) != 0 {
 		return false
 	}
 	return true

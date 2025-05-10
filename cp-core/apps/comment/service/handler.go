@@ -18,13 +18,13 @@ func NewCommentService(commentRepo repository.CommentRepository) *CommentService
 }
 
 func (impl *CommentServiceImpl) CreateComment(ctx context.Context, req *comment.CreateCommentRequest) (resp *comment.CreateCommentResponse, err error) {
-	id, err := generator.GenerateSID(constants.CommentPrefix)
+	id, err := generator.GenerateSID(constants.SIDPrefixComment)
 	if err != nil {
 		return nil, err
 	}
 	param := repository.CreateCommentParams{
 		ID:        id,
-		AuthorID:  req.AuthorID,
+		UserID:    req.UserID,
 		ArticleID: req.ArticleID,
 		ParentID:  req.ParentID,
 		Content:   req.Content,

@@ -2,7 +2,7 @@ include "base.thrift"
 
 struct CompletedComment {
 	1: required string ID
-	2: required string AuthorID
+	2: required string UserID
 	3: required string ArticleID
 	4: required string ParentID
 	5: required string Content
@@ -13,7 +13,7 @@ struct CompletedComment {
 }
 
 struct CreateCommentRequest {
-    1: required string AuthorID
+    1: required string UserID
     2: required string ArticleID
     3: optional string ParentID
     4: required string Content
